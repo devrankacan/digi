@@ -122,19 +122,21 @@ export default function ContactForm({ packages, contact, logo, logoText }: Conta
             href={`https://wa.me/${contact.whatsapp}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-3 text-white font-bold py-3 px-5 rounded-2xl mb-7 transition-all active:scale-95"
-            style={{
-              background: "linear-gradient(135deg, #25d366 0%, #128c4e 100%)",
-              boxShadow: "0 4px 16px rgba(37,211,102,0.35)",
-            }}
+            className="flex items-center mb-7 transition-all active:scale-95 overflow-hidden"
+            style={{ background: "#4caf6e", borderRadius: "14px", boxShadow: "0 4px 18px rgba(0,0,0,0.3)" }}
           >
-            <svg className="w-9 h-9 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-              <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.532 5.858L.054 23.617a.5.5 0 0 0 .609.61l5.88-1.485A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.378l-.373-.213-3.865.977.997-3.76-.232-.388A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
-            </svg>
-            <div>
-              <div className="text-xs font-semibold opacity-90 leading-none mb-1">WhatsApp Hattı</div>
-              <div className="text-xl font-black leading-none tracking-wide">{contact.whatsappDisplay}</div>
+            <div
+              className="flex items-center justify-center flex-shrink-0"
+              style={{ width: "64px", height: "64px", background: "#3a9e58", borderRadius: "14px", boxShadow: "2px 0 8px rgba(0,0,0,0.18)" }}
+            >
+              <svg width="38" height="38" fill="white" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.532 5.858L.054 23.617a.5.5 0 0 0 .609.61l5.88-1.485A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.378l-.373-.213-3.865.977.997-3.76-.232-.388A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+              </svg>
+            </div>
+            <div className="flex-1 px-4">
+              <div className="text-white font-black italic text-base leading-tight">WhatsApp Hattı</div>
+              <div className="text-white font-black italic text-lg leading-tight tracking-wide">{contact.whatsappDisplay}</div>
             </div>
           </a>
 
