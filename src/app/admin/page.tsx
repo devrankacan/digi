@@ -44,6 +44,7 @@ export default function AdminPage() {
   const [saveMsg, setSaveMsg] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
+  const [selectedFileName, setSelectedFileName] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem(STORAGE_KEY);
@@ -144,6 +145,7 @@ export default function AdminPage() {
     }
     setUploading(false);
     if (fileRef.current) fileRef.current.value = "";
+    setSelectedFileName("");
   }
 
   function addPackage() {
@@ -235,20 +237,27 @@ export default function AdminPage() {
                   src={settings.logo}
                   alt="Logo"
                   className="max-h-16 object-contain border border-gray-200 rounded-lg p-1"
+                  onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                 />
               ) : (
                 <div className="text-gray-400 text-sm border border-dashed border-gray-300 rounded-lg px-4 py-3">
-                  Logo yok
+                  Henüz logo yüklenmedi
                 </div>
               )}
             </div>
             <div className="flex items-center gap-2 mb-4">
-              <input
-                type="file"
-                accept="image/*"
-                ref={fileRef}
-                className="flex-1 text-sm border border-gray-300 rounded-xl px-3 py-2 text-gray-900 focus:outline-none focus:border-purple-500"
-              />
+              <label className="flex-1 cursor-pointer">
+                <div className="border border-gray-300 rounded-xl px-3 py-2 text-sm text-gray-500 bg-gray-50 hover:bg-gray-100 transition-colors truncate">
+                  {selectedFileName || "Resim seçin (PNG, JPG, SVG)"}
+                </div>
+                <input
+                  type="file"
+                  accept="image/*"
+                  ref={fileRef}
+                  className="hidden"
+                  onChange={(e) => setSelectedFileName(e.target.files?.[0]?.name || "")}
+                />
+              </label>
               <button
                 onClick={handleLogoUpload}
                 disabled={uploading}
