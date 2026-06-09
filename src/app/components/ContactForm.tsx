@@ -92,24 +92,24 @@ export default function ContactForm({ packages, contact, logo, logoText, heroIma
 
       {/* Main */}
       <main className="flex-1 flex flex-col items-center px-8 pt-8 pb-10 relative" style={{ zIndex: 2 }}>
-        {/* Desktop: hero görseli varsa 3 kolon, yoksa 2 kolon | Mobile: tek kolon */}
-        <div className={`w-full max-w-xs ${heroImage ? "md:max-w-6xl md:grid md:grid-cols-[1fr_auto_420px]" : "md:max-w-4xl md:grid md:grid-cols-2"} md:gap-0 md:items-stretch`}>
+        <div className={`w-full max-w-xs ${heroImage ? "md:max-w-6xl md:flex md:gap-10 md:items-stretch" : "md:max-w-sm"}`}>
 
-          {/* HERO GÖRSEL - sadece masaüstünde, sadece görsel varsa */}
+          {/* HERO GÖRSEL - sadece masaüstünde */}
           {heroImage && (
-            <>
-              <div className="hidden md:block rounded-2xl overflow-hidden" style={{ minHeight: "520px" }}>
-                <img src={heroImage} alt="Kampanya" className="w-full h-full object-cover" style={{ borderRadius: "16px" }} />
-              </div>
-              {/* Dikey ayraç */}
-              <div className="hidden md:flex items-center justify-center px-8">
-                <div style={{ width: "1.5px", height: "85%", background: "rgba(255,255,255,0.15)" }} />
-              </div>
-            </>
+            <div className="hidden md:block flex-1 rounded-2xl overflow-hidden" style={{ minHeight: "520px" }}>
+              <img src={heroImage} alt="Kampanya" className="w-full h-full object-cover" style={{ borderRadius: "16px" }} />
+            </div>
           )}
 
-          {/* FORM KOLON: Logo + Başlık + WhatsApp + Form */}
-          <div className="md:pt-4">
+          {/* Dikey ayraç */}
+          {heroImage && (
+            <div className="hidden md:flex items-center">
+              <div style={{ width: "1.5px", height: "85%", background: "rgba(255,255,255,0.15)" }} />
+            </div>
+          )}
+
+          {/* SAĞ KOLON: Logo + Başlık + WhatsApp + Paketler + Form */}
+          <div className={`${heroImage ? "md:w-[420px] md:flex-shrink-0" : ""} md:pt-4`}>
             {/* Logo */}
             <div className="text-center mb-5">
               {logo ? (
@@ -155,47 +155,6 @@ export default function ContactForm({ packages, contact, logo, logoText, heroIma
               </div>
             </a>
 
-            {/* Desktop'ta paketleri sol kolona taşı */}
-            <div className="hidden md:block space-y-2">
-              {packages.map((pkg) => (
-                <label
-                  key={pkg.id}
-                  className="flex items-start gap-3 cursor-pointer px-4 py-3 rounded-xl transition-all"
-                  style={{
-                    background: form.paket === pkg.id ? "rgba(255,255,255,0.18)" : "rgba(255,255,255,0.07)",
-                    border: `1.5px solid ${form.paket === pkg.id ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.12)"}`,
-                  }}
-                >
-                  <div className="mt-0.5 flex-shrink-0">
-                    <div
-                      className="w-5 h-5 rounded-full flex items-center justify-center"
-                      style={{ border: `2px solid ${form.paket === pkg.id ? "#fff" : "rgba(255,255,255,0.5)"}` }}
-                    >
-                      {form.paket === pkg.id && (
-                        <div className="w-2.5 h-2.5 rounded-full bg-white" />
-                      )}
-                    </div>
-                  </div>
-                  <input
-                    type="radio"
-                    name="paket"
-                    value={pkg.id}
-                    checked={form.paket === pkg.id}
-                    onChange={(e) => setForm({ ...form, paket: e.target.value })}
-                    className="sr-only"
-                  />
-                  <span className="text-white text-sm leading-snug">
-                    <span className="font-bold">{pkg.label}</span>
-                    <br />
-                    <span className="text-white/65 text-xs">({pkg.desc} {pkg.price})</span>
-                  </span>
-                </label>
-              ))}
-            </div>
-          </div>
-
-          {/* SAĞ KOLON: Form */}
-          <div>
             {status === "success" ? (
               <div className="rounded-2xl p-10 text-center" style={{ background: "rgba(255,255,255,0.1)" }}>
                 <div className="text-5xl mb-3">🎉</div>
@@ -286,8 +245,8 @@ export default function ContactForm({ packages, contact, logo, logoText, heroIma
                   />
                 </div>
 
-                {/* Paket Seçimi - sadece mobilde burada görünür */}
-                <div className="md:hidden space-y-2 pt-1">
+                {/* Paket Seçimi */}
+                <div className="space-y-2 pt-1">
                   {packages.map((pkg) => (
                     <label
                       key={pkg.id}
