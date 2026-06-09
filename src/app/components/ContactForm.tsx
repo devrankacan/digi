@@ -55,7 +55,7 @@ export default function ContactForm({ packages, contact, logo, logoText }: Conta
 
   return (
     <div
-      className="min-h-screen flex flex-col"
+      className="min-h-screen flex flex-col relative overflow-hidden"
       style={{
         background: "#3b0a6e",
         backgroundImage: `
@@ -65,6 +65,16 @@ export default function ContactForm({ packages, contact, logo, logoText }: Conta
         `,
       }}
     >
+      {/* Dekoratif dikey çizgiler - sol */}
+      <div className="absolute left-0 top-0 bottom-0 flex gap-1.5 pointer-events-none" style={{ paddingLeft: "10px" }}>
+        <div className="w-px h-full" style={{ background: "linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.15) 20%, rgba(255,255,255,0.08) 80%, transparent 100%)" }} />
+        <div className="w-px h-full" style={{ background: "linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.08) 20%, rgba(255,255,255,0.04) 80%, transparent 100%)" }} />
+      </div>
+      {/* Dekoratif dikey çizgiler - sağ */}
+      <div className="absolute right-0 top-0 bottom-0 flex gap-1.5 pointer-events-none" style={{ paddingRight: "10px" }}>
+        <div className="w-px h-full" style={{ background: "linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.08) 20%, rgba(255,255,255,0.04) 80%, transparent 100%)" }} />
+        <div className="w-px h-full" style={{ background: "linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.15) 20%, rgba(255,255,255,0.08) 80%, transparent 100%)" }} />
+      </div>
 
       {/* Nav */}
       <nav style={{ background: "rgba(0,0,0,0.25)" }}>
@@ -87,14 +97,8 @@ export default function ContactForm({ packages, contact, logo, logoText }: Conta
               <img src={logo} alt={logoText} className="mx-auto max-h-16 object-contain" />
             ) : (
               <span
-                className="text-5xl font-black italic"
-                style={{
-                  fontFamily: "'Arial Black', 'Impact', sans-serif",
-                  background: "linear-gradient(90deg, #fff 30%, #e60026 30%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
+                className="text-5xl font-black italic text-white"
+                style={{ fontFamily: "'Arial Black', 'Impact', sans-serif" }}
               >
                 {logoText}
               </span>
