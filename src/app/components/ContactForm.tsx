@@ -57,14 +57,31 @@ export default function ContactForm({ packages, contact, logo, logoText }: Conta
     <div
       className="min-h-screen flex flex-col relative overflow-hidden"
       style={{
-        background: "#3b0a6e",
+        background: "#400442",
         backgroundImage: `
-          radial-gradient(ellipse 80% 60% at 50% 10%, rgba(120,40,180,0.7) 0%, transparent 70%),
-          radial-gradient(ellipse 60% 50% at 50% 50%, rgba(90,20,150,0.5) 0%, transparent 70%),
-          linear-gradient(180deg, #2a0550 0%, #3b0a6e 40%, #2a0550 100%)
+          linear-gradient(180deg, #400442 0%, #4e0652 100%),
+          linear-gradient(90deg, #400442 0%, #400442 3%, #451f46 3%, #621e65 97%, #400442 97%, #400442 100%)
         `,
+        backgroundBlendMode: "normal",
       }}
     >
+      {/* Çizgi içi degrade (merkez alan) */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: "linear-gradient(90deg, transparent 3%, #451f46 3%, #621e65 50%, #451f46 97%, transparent 97%)",
+          mixBlendMode: "normal",
+        }}
+      />
+      {/* Dikey degrade overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: "linear-gradient(180deg, #4e0652 0%, #621e65 40%, #451f46 70%, #400442 100%)",
+          opacity: 0.6,
+          mixBlendMode: "multiply",
+        }}
+      />
       {/* Dekoratif dikey çizgiler - sol */}
       <div className="absolute left-0 top-0 bottom-0 flex gap-1.5 pointer-events-none" style={{ paddingLeft: "10px" }}>
         <div className="w-px h-full" style={{ background: "linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.15) 20%, rgba(255,255,255,0.08) 80%, transparent 100%)" }} />
