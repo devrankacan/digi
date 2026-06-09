@@ -67,12 +67,12 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-[#001f5b] via-[#003399] to-[#0055cc]">
+    <main className="min-h-screen bg-gradient-to-br from-[#1a0033] via-[#4b0082] to-[#7b2fbe]">
       {/* Header */}
-      <header className="px-6 py-4 flex items-center justify-between bg-black/20 backdrop-blur-sm">
+      <header className="px-4 md:px-6 py-4 flex items-center justify-between bg-black/20 backdrop-blur-sm">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-            <span className="text-[#003399] font-black text-sm">D</span>
+            <span className="text-[#4b0082] font-black text-sm">D</span>
           </div>
           <span className="text-white font-bold text-xl tracking-wide">dijitürk</span>
         </div>
@@ -81,18 +81,24 @@ export default function Home() {
           <a href="#paketler" className="hover:text-white transition-colors">Paketler</a>
           <a href="#form" className="hover:text-white transition-colors">Başvur</a>
         </div>
+        <a
+          href="#form"
+          className="md:hidden bg-yellow-400 text-black text-xs font-bold px-3 py-1.5 rounded-full"
+        >
+          Başvur
+        </a>
       </header>
 
       {/* Hero Section */}
-      <section className="px-6 py-12 text-center" id="kampanya">
+      <section className="px-4 md:px-6 py-10 md:py-12 text-center" id="kampanya">
         <div className="inline-block bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full mb-4 tracking-wider uppercase">
           Sınırlı Süre Kampanyası
         </div>
-        <h1 className="text-white text-4xl md:text-5xl font-extrabold leading-tight mb-4">
+        <h1 className="text-white text-3xl md:text-5xl font-extrabold leading-tight mb-4">
           İlk 3 Ay <span className="text-yellow-400">%50 İndirim</span>
           <br />Dijital TV Keyfini Yaşa!
         </h1>
-        <p className="text-white/80 text-lg max-w-xl mx-auto mb-2">
+        <p className="text-white/80 text-base md:text-lg max-w-xl mx-auto mb-2">
           Türkiye&apos;nin en kapsamlı dijital yayın platformu ile 400&apos;den fazla kanala anında erişin.
         </p>
         <p className="text-yellow-300 text-sm font-semibold">
@@ -103,6 +109,7 @@ export default function Home() {
       {/* Main Content */}
       <section className="max-w-7xl mx-auto px-4 pb-16">
         <div className="grid lg:grid-cols-2 gap-8 items-start">
+
           {/* Left: Packages */}
           <div id="paketler">
             <h2 className="text-white text-2xl font-bold mb-6">Kampanyalı Paketler</h2>
@@ -110,7 +117,10 @@ export default function Home() {
               {packages.map((pkg) => (
                 <div
                   key={pkg.name}
-                  onClick={() => setForm({ ...form, package: pkg.name })}
+                  onClick={() => {
+                    setForm({ ...form, package: pkg.name });
+                    document.getElementById("form")?.scrollIntoView({ behavior: "smooth" });
+                  }}
                   className={`relative cursor-pointer rounded-2xl p-5 transition-all border-2 ${
                     form.package === pkg.name
                       ? "bg-white border-yellow-400 shadow-xl shadow-yellow-400/20"
@@ -126,7 +136,7 @@ export default function Home() {
                     <div>
                       <h3
                         className={`font-bold text-lg ${
-                          form.package === pkg.name ? "text-[#003399]" : "text-white"
+                          form.package === pkg.name ? "text-[#4b0082]" : "text-white"
                         }`}
                       >
                         {pkg.name}
@@ -142,7 +152,7 @@ export default function Home() {
                     <div className="text-right">
                       <span
                         className={`text-2xl font-extrabold ${
-                          form.package === pkg.name ? "text-[#003399]" : "text-yellow-400"
+                          form.package === pkg.name ? "text-[#4b0082]" : "text-yellow-400"
                         }`}
                       >
                         {pkg.price}
@@ -169,7 +179,7 @@ export default function Home() {
                     ))}
                   </ul>
                   {form.package === pkg.name && (
-                    <div className="mt-3 text-[#003399] text-xs font-semibold">
+                    <div className="mt-3 text-[#4b0082] text-xs font-semibold">
                       ✔ Seçildi — aşağıdaki formu doldurun
                     </div>
                   )}
@@ -195,9 +205,9 @@ export default function Home() {
           </div>
 
           {/* Right: Form */}
-          <div id="form" className="bg-white rounded-3xl shadow-2xl p-8">
+          <div id="form" className="bg-white rounded-3xl shadow-2xl p-6 md:p-8">
             <div className="mb-6">
-              <h2 className="text-[#003399] text-2xl font-bold">Hemen Başvur</h2>
+              <h2 className="text-[#4b0082] text-2xl font-bold">Hemen Başvur</h2>
               <p className="text-gray-500 text-sm mt-1">
                 Temsilcimiz en kısa sürede sizi arayacaktır.
               </p>
@@ -206,20 +216,20 @@ export default function Home() {
             {status === "success" ? (
               <div className="text-center py-12">
                 <div className="text-5xl mb-4">🎉</div>
-                <h3 className="text-[#003399] text-xl font-bold mb-2">Başvurunuz Alındı!</h3>
+                <h3 className="text-[#4b0082] text-xl font-bold mb-2">Başvurunuz Alındı!</h3>
                 <p className="text-gray-500 text-sm">
                   Müşteri temsilcimiz en kısa sürede sizi arayacak.
                 </p>
                 <button
                   onClick={() => setStatus("idle")}
-                  className="mt-6 text-[#003399] underline text-sm"
+                  className="mt-6 text-[#4b0082] underline text-sm"
                 >
                   Yeni başvuru yap
                 </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Ad Soyad *
@@ -231,7 +241,7 @@ export default function Home() {
                       value={form.name}
                       onChange={handleChange}
                       placeholder="Adınız Soyadınız"
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#003399] focus:border-transparent"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#4b0082] focus:border-transparent"
                     />
                   </div>
                   <div>
@@ -245,7 +255,7 @@ export default function Home() {
                       value={form.phone}
                       onChange={handleChange}
                       placeholder="05XX XXX XX XX"
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#003399] focus:border-transparent"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#4b0082] focus:border-transparent"
                     />
                   </div>
                 </div>
@@ -258,11 +268,11 @@ export default function Home() {
                     value={form.email}
                     onChange={handleChange}
                     placeholder="ornek@email.com"
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#003399] focus:border-transparent"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#4b0082] focus:border-transparent"
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Şehir</label>
                     <input
@@ -271,7 +281,7 @@ export default function Home() {
                       value={form.city}
                       onChange={handleChange}
                       placeholder="İstanbul"
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#003399] focus:border-transparent"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#4b0082] focus:border-transparent"
                     />
                   </div>
                   <div>
@@ -282,7 +292,7 @@ export default function Home() {
                       name="package"
                       value={form.package}
                       onChange={handleChange}
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#003399] focus:border-transparent bg-white"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#4b0082] focus:border-transparent bg-white"
                     >
                       <option value="">Seçiniz</option>
                       {packages.map((p) => (
@@ -304,7 +314,7 @@ export default function Home() {
                     onChange={handleChange}
                     rows={3}
                     placeholder="Eklemek istediğiniz bilgiler..."
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#003399] focus:border-transparent resize-none"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#4b0082] focus:border-transparent resize-none"
                   />
                 </div>
 
@@ -315,7 +325,7 @@ export default function Home() {
                 <button
                   type="submit"
                   disabled={status === "loading"}
-                  className="w-full bg-[#003399] hover:bg-[#002277] text-white font-bold py-3 rounded-xl transition-colors disabled:opacity-60 text-sm tracking-wide"
+                  className="w-full bg-gradient-to-r from-[#4b0082] to-[#7b2fbe] hover:from-[#3a0066] hover:to-[#6a1fad] text-white font-bold py-3 rounded-xl transition-all disabled:opacity-60 text-sm tracking-wide shadow-lg shadow-purple-900/30"
                 >
                   {status === "loading" ? "Gönderiliyor..." : "Başvuruyu Gönder"}
                 </button>
