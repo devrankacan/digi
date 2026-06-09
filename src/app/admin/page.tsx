@@ -401,21 +401,25 @@ export default function AdminPage() {
             <h2 className="text-lg font-black mb-1" style={{ color: "#5c1294" }}>Kampanya Görseli</h2>
             <p className="text-xs text-gray-400 mb-4">Masaüstünde formun solunda görünür. Mobilde gösterilmez.</p>
             {heroImage && (
-              <img
-                src={heroImage}
-                alt="Kampanya Görseli"
-                className="w-full max-h-48 object-cover rounded-xl mb-4 border border-gray-200"
-                onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
-              />
+              heroImage.includes(".webm") ? (
+                <video src={heroImage} className="w-full max-h-48 rounded-xl mb-4 border border-gray-200" autoPlay muted loop playsInline />
+              ) : (
+                <img
+                  src={heroImage}
+                  alt="Kampanya Görseli"
+                  className="w-full max-h-48 object-cover rounded-xl mb-4 border border-gray-200"
+                  onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                />
+              )
             )}
             <div className="flex items-center gap-2">
               <label className="flex-1 cursor-pointer">
                 <div className="border border-gray-300 rounded-xl px-3 py-2 text-sm text-gray-500 bg-gray-50 hover:bg-gray-100 transition-colors truncate">
-                  {heroFileName || "Görsel seçin (PNG, JPG)"}
+                  {heroFileName || "Görsel veya Video seçin (PNG, JPG, WEBM)"}
                 </div>
                 <input
                   type="file"
-                  accept="image/*"
+                  accept="image/*,video/webm"
                   ref={heroFileRef}
                   className="hidden"
                   onChange={(e) => setHeroFileName(e.target.files?.[0]?.name || "")}

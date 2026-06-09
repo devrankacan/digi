@@ -94,10 +94,14 @@ export default function ContactForm({ packages, contact, logo, logoText, heroIma
       <main className="flex-1 flex flex-col items-center px-8 pt-8 pb-10 relative" style={{ zIndex: 2 }}>
         <div className={`w-full max-w-xs ${heroImage ? "md:max-w-6xl md:flex md:gap-10 md:items-stretch" : "md:max-w-sm"}`}>
 
-          {/* HERO GÖRSEL - sadece masaüstünde */}
+          {/* HERO GÖRSEL/VİDEO - sadece masaüstünde */}
           {heroImage && (
             <div className="hidden md:block flex-1 rounded-2xl overflow-hidden" style={{ minHeight: "520px", maxWidth: "680px" }}>
-              <img src={heroImage} alt="Kampanya" className="w-full h-full" style={{ borderRadius: "16px", objectFit: "contain", objectPosition: "center center" }} />
+              {heroImage.includes(".webm") ? (
+                <video src={heroImage} className="w-full h-full" style={{ borderRadius: "16px", objectFit: "contain" }} autoPlay muted loop playsInline />
+              ) : (
+                <img src={heroImage} alt="Kampanya" className="w-full h-full" style={{ borderRadius: "16px", objectFit: "contain", objectPosition: "center center" }} />
+              )}
             </div>
           )}
 
