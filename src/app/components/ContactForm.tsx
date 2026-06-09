@@ -143,9 +143,9 @@ export default function ContactForm({ packages, contact, logo, logoText }: Conta
                     onChange={(e) => setForm({ ...form, ad: e.target.value })}
                     placeholder="Adınızı giriniz"
                     className="w-full text-white placeholder-white/40 text-sm px-4 py-3 rounded-xl outline-none transition-all"
-                    style={{ background: "rgba(255,255,255,0.12)", border: "1.5px solid rgba(255,255,255,0.2)" }}
-                    onFocus={e => (e.target.style.borderColor = "rgba(255,255,255,0.6)")}
-                    onBlur={e => (e.target.style.borderColor = "rgba(255,255,255,0.2)")}
+                    style={{ background: "rgba(255,255,255,0.08)", border: "1.5px solid rgba(255,255,255,0.25)", boxShadow: "inset 0 2px 8px rgba(0,0,0,0.25), 0 1px 0 rgba(255,255,255,0.08)" }}
+                    onFocus={e => { (e.target as HTMLInputElement).style.borderColor = "rgba(255,255,255,0.7)"; (e.target as HTMLInputElement).style.boxShadow = "inset 0 2px 8px rgba(0,0,0,0.25), 0 0 0 2px rgba(255,255,255,0.1)" }}
+                    onBlur={e => { (e.target as HTMLInputElement).style.borderColor = "rgba(255,255,255,0.25)"; (e.target as HTMLInputElement).style.boxShadow = "inset 0 2px 8px rgba(0,0,0,0.25), 0 1px 0 rgba(255,255,255,0.08)" }}
                   />
                 </div>
                 <div>
@@ -157,9 +157,9 @@ export default function ContactForm({ packages, contact, logo, logoText }: Conta
                     onChange={(e) => setForm({ ...form, soyad: e.target.value })}
                     placeholder="Soyadınızı giriniz"
                     className="w-full text-white placeholder-white/40 text-sm px-4 py-3 rounded-xl outline-none transition-all"
-                    style={{ background: "rgba(255,255,255,0.12)", border: "1.5px solid rgba(255,255,255,0.2)" }}
-                    onFocus={e => (e.target.style.borderColor = "rgba(255,255,255,0.6)")}
-                    onBlur={e => (e.target.style.borderColor = "rgba(255,255,255,0.2)")}
+                    style={{ background: "rgba(255,255,255,0.08)", border: "1.5px solid rgba(255,255,255,0.25)", boxShadow: "inset 0 2px 8px rgba(0,0,0,0.25), 0 1px 0 rgba(255,255,255,0.08)" }}
+                    onFocus={e => { (e.target as HTMLInputElement).style.borderColor = "rgba(255,255,255,0.7)"; (e.target as HTMLInputElement).style.boxShadow = "inset 0 2px 8px rgba(0,0,0,0.25), 0 0 0 2px rgba(255,255,255,0.1)" }}
+                    onBlur={e => { (e.target as HTMLInputElement).style.borderColor = "rgba(255,255,255,0.25)"; (e.target as HTMLInputElement).style.boxShadow = "inset 0 2px 8px rgba(0,0,0,0.25), 0 1px 0 rgba(255,255,255,0.08)" }}
                   />
                 </div>
               </div>
@@ -174,9 +174,9 @@ export default function ContactForm({ packages, contact, logo, logoText }: Conta
                   onChange={(e) => setForm({ ...form, telefon: e.target.value })}
                   placeholder="10 Haneli Telefon Numaranız"
                   className="w-full text-white placeholder-white/40 text-sm px-4 py-3 rounded-xl outline-none transition-all"
-                  style={{ background: "rgba(255,255,255,0.12)", border: "1.5px solid rgba(255,255,255,0.2)" }}
-                  onFocus={e => (e.target.style.borderColor = "rgba(255,255,255,0.6)")}
-                  onBlur={e => (e.target.style.borderColor = "rgba(255,255,255,0.2)")}
+                  style={{ background: "rgba(255,255,255,0.08)", border: "1.5px solid rgba(255,255,255,0.25)", boxShadow: "inset 0 2px 8px rgba(0,0,0,0.25), 0 1px 0 rgba(255,255,255,0.08)" }}
+                  onFocus={e => { (e.target as HTMLInputElement).style.borderColor = "rgba(255,255,255,0.7)"; (e.target as HTMLInputElement).style.boxShadow = "inset 0 2px 8px rgba(0,0,0,0.25), 0 0 0 2px rgba(255,255,255,0.1)" }}
+                  onBlur={e => { (e.target as HTMLInputElement).style.borderColor = "rgba(255,255,255,0.25)"; (e.target as HTMLInputElement).style.boxShadow = "inset 0 2px 8px rgba(0,0,0,0.25), 0 1px 0 rgba(255,255,255,0.08)" }}
                 />
               </div>
 
@@ -189,9 +189,9 @@ export default function ContactForm({ packages, contact, logo, logoText }: Conta
                   onChange={(e) => setForm({ ...form, eposta: e.target.value })}
                   placeholder="ornek@email.com"
                   className="w-full text-white placeholder-white/40 text-sm px-4 py-3 rounded-xl outline-none transition-all"
-                  style={{ background: "rgba(255,255,255,0.12)", border: "1.5px solid rgba(255,255,255,0.2)" }}
-                  onFocus={e => (e.target.style.borderColor = "rgba(255,255,255,0.6)")}
-                  onBlur={e => (e.target.style.borderColor = "rgba(255,255,255,0.2)")}
+                  style={{ background: "rgba(255,255,255,0.08)", border: "1.5px solid rgba(255,255,255,0.25)", boxShadow: "inset 0 2px 8px rgba(0,0,0,0.25), 0 1px 0 rgba(255,255,255,0.08)" }}
+                  onFocus={e => { (e.target as HTMLInputElement).style.borderColor = "rgba(255,255,255,0.7)"; (e.target as HTMLInputElement).style.boxShadow = "inset 0 2px 8px rgba(0,0,0,0.25), 0 0 0 2px rgba(255,255,255,0.1)" }}
+                  onBlur={e => { (e.target as HTMLInputElement).style.borderColor = "rgba(255,255,255,0.25)"; (e.target as HTMLInputElement).style.boxShadow = "inset 0 2px 8px rgba(0,0,0,0.25), 0 1px 0 rgba(255,255,255,0.08)" }}
                 />
               </div>
 
@@ -204,9 +204,9 @@ export default function ContactForm({ packages, contact, logo, logoText }: Conta
                   onChange={(e) => setForm({ ...form, sehir: e.target.value })}
                   placeholder="İstanbul"
                   className="w-full text-white placeholder-white/40 text-sm px-4 py-3 rounded-xl outline-none transition-all"
-                  style={{ background: "rgba(255,255,255,0.12)", border: "1.5px solid rgba(255,255,255,0.2)" }}
-                  onFocus={e => (e.target.style.borderColor = "rgba(255,255,255,0.6)")}
-                  onBlur={e => (e.target.style.borderColor = "rgba(255,255,255,0.2)")}
+                  style={{ background: "rgba(255,255,255,0.08)", border: "1.5px solid rgba(255,255,255,0.25)", boxShadow: "inset 0 2px 8px rgba(0,0,0,0.25), 0 1px 0 rgba(255,255,255,0.08)" }}
+                  onFocus={e => { (e.target as HTMLInputElement).style.borderColor = "rgba(255,255,255,0.7)"; (e.target as HTMLInputElement).style.boxShadow = "inset 0 2px 8px rgba(0,0,0,0.25), 0 0 0 2px rgba(255,255,255,0.1)" }}
+                  onBlur={e => { (e.target as HTMLInputElement).style.borderColor = "rgba(255,255,255,0.25)"; (e.target as HTMLInputElement).style.boxShadow = "inset 0 2px 8px rgba(0,0,0,0.25), 0 1px 0 rgba(255,255,255,0.08)" }}
                 />
               </div>
 
