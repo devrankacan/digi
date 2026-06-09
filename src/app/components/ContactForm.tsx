@@ -72,16 +72,12 @@ export default function ContactForm({ packages, contact, logo, logoText }: Conta
           {/* Logo */}
           <div className="text-center mb-6">
             {logo ? (
-              <img src={logo} alt={logoText} className="mx-auto mb-2 max-h-20 object-contain" />
+              <img src={logo} alt={logoText} className="mx-auto max-h-20 object-contain" />
             ) : (
-              <div className="inline-flex items-center gap-1 mb-1">
-                <span className="text-4xl font-black italic" style={{ color: "#e60026", fontFamily: "Arial Black, sans-serif" }}>
-                  <span className="text-white">D</span>igiturc
-                </span>
-                <span className="text-4xl font-black italic text-white">k</span>
-              </div>
+              <span className="text-4xl font-black italic text-white" style={{ fontFamily: "Arial Black, sans-serif" }}>
+                {logoText}
+              </span>
             )}
-            <div className="w-6 h-6 bg-red-600 rounded-full mx-auto -mt-2" style={{ width: "12px", height: "12px" }} />
           </div>
 
           {/* Title */}
