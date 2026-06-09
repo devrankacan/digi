@@ -96,8 +96,8 @@ export default function ContactForm({ packages, contact, logo, logoText, heroIma
 
           {/* HERO GÖRSEL - sadece masaüstünde */}
           {heroImage && (
-            <div className="hidden md:block flex-1 rounded-2xl overflow-hidden" style={{ minHeight: "520px" }}>
-              <img src={heroImage} alt="Kampanya" className="w-full h-full object-cover" style={{ borderRadius: "16px" }} />
+            <div className="hidden md:block flex-1 rounded-2xl overflow-hidden" style={{ minHeight: "520px", maxWidth: "680px" }}>
+              <img src={heroImage} alt="Kampanya" className="w-full h-full" style={{ borderRadius: "16px", objectFit: "contain", objectPosition: "center center" }} />
             </div>
           )}
 
