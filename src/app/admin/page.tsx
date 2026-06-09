@@ -179,7 +179,7 @@ export default function AdminPage() {
                 value={pwInput}
                 onChange={(e) => setPwInput(e.target.value)}
                 placeholder="Admin şifresi"
-                className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-purple-500"
+                className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm text-gray-900 focus:outline-none focus:border-purple-500"
               />
             </div>
             {pwError && (
@@ -246,7 +246,7 @@ export default function AdminPage() {
                 type="file"
                 accept="image/*"
                 ref={fileRef}
-                className="flex-1 text-sm border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-purple-500"
+                className="flex-1 text-sm border border-gray-300 rounded-xl px-3 py-2 text-gray-900 focus:outline-none focus:border-purple-500"
               />
               <button
                 onClick={handleLogoUpload}
@@ -263,7 +263,7 @@ export default function AdminPage() {
                 type="text"
                 value={logoText}
                 onChange={(e) => setLogoText(e.target.value)}
-                className="w-full border border-gray-300 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-purple-500"
+                className="w-full border border-gray-300 rounded-xl px-4 py-2 text-sm text-gray-900 focus:outline-none focus:border-purple-500"
               />
             </div>
           </div>
@@ -287,7 +287,7 @@ export default function AdminPage() {
                         value={pkg.label}
                         onChange={(e) => updatePackage(idx, "label", e.target.value)}
                         placeholder="Paket adı"
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-purple-500"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-purple-500"
                       />
                     </div>
                     <div>
@@ -297,7 +297,7 @@ export default function AdminPage() {
                         value={pkg.desc}
                         onChange={(e) => updatePackage(idx, "desc", e.target.value)}
                         placeholder="Açıklama"
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-purple-500"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-purple-500"
                       />
                     </div>
                     <div>
@@ -307,7 +307,7 @@ export default function AdminPage() {
                         value={pkg.price}
                         onChange={(e) => updatePackage(idx, "price", e.target.value)}
                         placeholder="549₺"
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-purple-500"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-purple-500"
                       />
                     </div>
                   </div>
@@ -355,7 +355,7 @@ export default function AdminPage() {
                   value={contact.whatsapp}
                   onChange={(e) => setContact({ ...contact, whatsapp: e.target.value })}
                   placeholder="905453267076"
-                  className="w-full border border-gray-300 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-purple-500"
+                  className="w-full border border-gray-300 rounded-xl px-4 py-2 text-sm text-gray-900 focus:outline-none focus:border-purple-500"
                 />
               </div>
               <div>
@@ -367,7 +367,7 @@ export default function AdminPage() {
                   value={contact.whatsappDisplay}
                   onChange={(e) => setContact({ ...contact, whatsappDisplay: e.target.value })}
                   placeholder="0 545 326 70 76"
-                  className="w-full border border-gray-300 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-purple-500"
+                  className="w-full border border-gray-300 rounded-xl px-4 py-2 text-sm text-gray-900 focus:outline-none focus:border-purple-500"
                 />
               </div>
               <div>
@@ -377,7 +377,7 @@ export default function AdminPage() {
                   value={contact.footerText}
                   onChange={(e) => setContact({ ...contact, footerText: e.target.value })}
                   placeholder="© 2026 Dijitürk — Tüm hakları saklıdır."
-                  className="w-full border border-gray-300 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-purple-500"
+                  className="w-full border border-gray-300 rounded-xl px-4 py-2 text-sm text-gray-900 focus:outline-none focus:border-purple-500"
                 />
               </div>
             </div>
