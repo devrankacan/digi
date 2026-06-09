@@ -39,9 +39,9 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "linear-gradient(180deg, #3b0764 0%, #4c1d95 40%, #5b21b6 100%)" }}>
+    <div className="min-h-screen flex flex-col" style={{ background: "#5c1294" }}>
       {/* Nav */}
-      <nav className="bg-[#2e0652] border-b border-white/10">
+      <nav className="bg-[#4a0e80] border-b border-white/10">
         <div className="max-w-2xl mx-auto px-4 flex justify-center gap-8 py-3">
           {["Anasayfa", "Hakkımızda", "İletişim"].map((item) => (
             <a key={item} href="#" className="text-white text-sm font-medium hover:text-yellow-300 transition-colors">
@@ -215,7 +215,7 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-[#2e0652] text-white/60 text-center text-xs py-4 border-t border-white/10">
+      <footer className="bg-[#4a0e80] text-white/60 text-center text-xs py-4 border-t border-white/10">
         Copyright© 2026 Dijitürk — Tüm hakları saklıdır.
       </footer>
     </div>
