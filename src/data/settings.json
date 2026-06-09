@@ -11,5 +11,20 @@
     { "id": "internet", "label": "Dijitürk İnternet", "desc": "İnternet + Taraftar Paketi", "price": "549₺" },
     { "id": "spor", "label": "Sporun Yıldızı", "desc": "Sporun Yıldızı", "price": "459₺" },
     { "id": "bayi", "label": "Bayilere Özel", "desc": "100 MBPS", "price": "399₺" }
-  ]
+  ],
+  "about": {
+    "title": "Hakkımızda",
+    "content": "Dijitürk olarak 2005 yılından bu yana Türkiye'nin dijital yayıncılık sektöründe hizmet vermekteyiz. Milyonlarca aboneye kesintisiz, yüksek kaliteli yayın deneyimi sunuyoruz.",
+    "address": "İstanbul, Türkiye",
+    "email": "info@dijiturkabonelig.com",
+    "phone": "0 545 326 70 76"
+  },
+  "contactPage": {
+    "title": "İletişim",
+    "description": "Bizimle iletişime geçin, en kısa sürede size dönelim.",
+    "address": "İstanbul, Türkiye",
+    "email": "info@dijiturkabonelig.com",
+    "phone": "0 545 326 70 76",
+    "workingHours": "Pazartesi - Cumartesi: 09:00 - 18:00"
+  }
 }

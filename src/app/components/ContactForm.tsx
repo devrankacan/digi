@@ -83,11 +83,9 @@ export default function ContactForm({ packages, contact, logo, logoText }: Conta
       {/* Nav */}
       <nav className="relative" style={{ background: "rgba(0,0,0,0.25)", zIndex: 2 }}>
         <div className="max-w-lg mx-auto px-4 flex justify-center gap-10 py-3">
-          {contact.navLinks.map((item) => (
-            <a key={item} href="#" className="text-white text-sm font-semibold tracking-wide hover:text-yellow-300 transition-colors">
-              {item}
-            </a>
-          ))}
+          <a href="/" className="text-white text-sm font-semibold tracking-wide hover:text-yellow-300 transition-colors">Anasayfa</a>
+          <a href="/hakkimizda" className="text-white text-sm font-semibold tracking-wide hover:text-yellow-300 transition-colors">Hakkımızda</a>
+          <a href="/iletisim" className="text-white text-sm font-semibold tracking-wide hover:text-yellow-300 transition-colors">İletişim</a>
         </div>
       </nav>
 

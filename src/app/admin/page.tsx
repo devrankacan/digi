@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import * as XLSX from "xlsx";
 
 interface Submission {
   id: string;
@@ -27,11 +28,30 @@ interface Contact {
   footerText: string;
 }
 
+interface About {
+  title: string;
+  content: string;
+  address: string;
+  email: string;
+  phone: string;
+}
+
+interface ContactPage {
+  title: string;
+  description: string;
+  address: string;
+  email: string;
+  phone: string;
+  workingHours: string;
+}
+
 interface Settings {
   logo: string | null;
   logoText: string;
   contact: Contact;
   packages: Package[];
+  about: About;
+  contactPage: ContactPage;
 }
 
 const AUTH_HEADER = { Authorization: "Bearer dijiturkadmin" };
@@ -52,6 +72,8 @@ export default function AdminPage() {
     navLinks: [],
     footerText: "",
   });
+  const [about, setAbout] = useState<About>({ title: "", content: "", address: "", email: "", phone: "" });
+  const [contactPage, setContactPage] = useState<ContactPage>({ title: "", description: "", address: "", email: "", phone: "", workingHours: "" });
   const [saveMsg, setSaveMsg] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
@@ -79,6 +101,8 @@ export default function AdminPage() {
       setLogoText(data.logoText);
       setPackages(data.packages);
       setContact(data.contact);
+      setAbout(data.about);
+      setContactPage(data.contactPage);
     } finally {
       setLoading(false);
     }
@@ -172,17 +196,45 @@ export default function AdminPage() {
     setSelectedFileName("");
   }
 
-  function downloadCSV() {
+  function downloadExcel() {
     const headers = ["Tarih", "Ad Soyad", "Telefon", "E-posta", "Şehir", "Paket", "Mesaj"];
-    const rows = submissions.map((s) => [
-      s.date, s.name, s.phone, s.email, s.city, s.package, s.message,
-    ].map((v) => `"${String(v).replace(/"/g, '""')}"`).join(","));
-    const csv = "﻿" + [headers.join(","), ...rows].join("\n");
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a"); a.href = url;
-    a.download = `basvurular_${new Date().toISOString().slice(0,10)}.csv`;
-    a.click(); URL.revokeObjectURL(url);
+    const rows = submissions.map((s) => [s.date, s.name, s.phone, s.email, s.city, s.package, s.message]);
+
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.aoa_to_sheet([headers, ...rows]);
+
+    // Header styling: dark purple bg, white bold text
+    const headerStyle = {
+      fill: { fgColor: { rgb: "400442" } },
+      font: { bold: true, color: { rgb: "FFFFFF" } },
+      alignment: { horizontal: "center" },
+    };
+    headers.forEach((_, colIdx) => {
+      const cellRef = XLSX.utils.encode_cell({ r: 0, c: colIdx });
+      if (!ws[cellRef]) ws[cellRef] = { v: headers[colIdx], t: "s" };
+      ws[cellRef].s = headerStyle;
+    });
+
+    // Data row alternating colors
+    rows.forEach((row, rowIdx) => {
+      const bgColor = rowIdx % 2 === 0 ? "f5f0ff" : "ffffff";
+      row.forEach((_, colIdx) => {
+        const cellRef = XLSX.utils.encode_cell({ r: rowIdx + 1, c: colIdx });
+        if (ws[cellRef]) {
+          ws[cellRef].s = { fill: { fgColor: { rgb: bgColor } } };
+        }
+      });
+    });
+
+    // Auto column widths
+    const allRows = [headers, ...rows];
+    ws["!cols"] = headers.map((_, colIdx) => ({
+      wch: Math.max(...allRows.map((r) => String(r[colIdx] ?? "").length)) + 2,
+    }));
+
+    XLSX.utils.book_append_sheet(wb, ws, "Başvurular");
+    const fileName = `dijiturkaboneleri_${new Date().toISOString().slice(0, 10)}.xlsx`;
+    XLSX.writeFile(wb, fileName);
   }
 
   function addPackage() {
@@ -437,6 +489,157 @@ export default function AdminPage() {
             </button>
           </div>
 
+          {/* Hakkımızda Sayfası */}
+          <div className="bg-white rounded-2xl shadow p-6">
+            <h2 className="text-lg font-black mb-4" style={{ color: "#5c1294" }}>
+              Hakkımızda Sayfası
+            </h2>
+            <div className="space-y-3">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1">Sayfa Başlığı</label>
+                <input
+                  type="text"
+                  value={about.title}
+                  onChange={(e) => setAbout({ ...about, title: e.target.value })}
+                  className="w-full border border-gray-300 rounded-xl px-4 py-2 text-sm text-gray-900 focus:outline-none focus:border-purple-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1">İçerik</label>
+                <textarea
+                  rows={4}
+                  value={about.content}
+                  onChange={(e) => setAbout({ ...about, content: e.target.value })}
+                  className="w-full border border-gray-300 rounded-xl px-4 py-2 text-sm text-gray-900 focus:outline-none focus:border-purple-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1">Adres</label>
+                <input
+                  type="text"
+                  value={about.address}
+                  onChange={(e) => setAbout({ ...about, address: e.target.value })}
+                  className="w-full border border-gray-300 rounded-xl px-4 py-2 text-sm text-gray-900 focus:outline-none focus:border-purple-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1">E-posta</label>
+                <input
+                  type="text"
+                  value={about.email}
+                  onChange={(e) => setAbout({ ...about, email: e.target.value })}
+                  className="w-full border border-gray-300 rounded-xl px-4 py-2 text-sm text-gray-900 focus:outline-none focus:border-purple-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1">Telefon</label>
+                <input
+                  type="text"
+                  value={about.phone}
+                  onChange={(e) => setAbout({ ...about, phone: e.target.value })}
+                  className="w-full border border-gray-300 rounded-xl px-4 py-2 text-sm text-gray-900 focus:outline-none focus:border-purple-500"
+                />
+              </div>
+            </div>
+            <button
+              onClick={async () => {
+                if (!settings) return;
+                const updated = { ...settings, about };
+                const res = await fetch("/api/admin/settings", {
+                  method: "POST",
+                  headers: { ...AUTH_HEADER, "Content-Type": "application/json" },
+                  body: JSON.stringify(updated),
+                });
+                if (res.ok) { setSettings(updated); showSaveMsg("Hakkımızda kaydedildi!"); }
+                else showSaveMsg("Hata oluştu.");
+              }}
+              className="mt-4 w-full text-white font-bold py-2 rounded-xl text-sm transition-colors"
+              style={{ background: "#5c1294" }}
+            >
+              Kaydet
+            </button>
+          </div>
+
+          {/* İletişim Sayfası */}
+          <div className="bg-white rounded-2xl shadow p-6">
+            <h2 className="text-lg font-black mb-4" style={{ color: "#5c1294" }}>
+              İletişim Sayfası
+            </h2>
+            <div className="space-y-3">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1">Sayfa Başlığı</label>
+                <input
+                  type="text"
+                  value={contactPage.title}
+                  onChange={(e) => setContactPage({ ...contactPage, title: e.target.value })}
+                  className="w-full border border-gray-300 rounded-xl px-4 py-2 text-sm text-gray-900 focus:outline-none focus:border-purple-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1">Açıklama</label>
+                <input
+                  type="text"
+                  value={contactPage.description}
+                  onChange={(e) => setContactPage({ ...contactPage, description: e.target.value })}
+                  className="w-full border border-gray-300 rounded-xl px-4 py-2 text-sm text-gray-900 focus:outline-none focus:border-purple-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1">Adres</label>
+                <input
+                  type="text"
+                  value={contactPage.address}
+                  onChange={(e) => setContactPage({ ...contactPage, address: e.target.value })}
+                  className="w-full border border-gray-300 rounded-xl px-4 py-2 text-sm text-gray-900 focus:outline-none focus:border-purple-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1">E-posta</label>
+                <input
+                  type="text"
+                  value={contactPage.email}
+                  onChange={(e) => setContactPage({ ...contactPage, email: e.target.value })}
+                  className="w-full border border-gray-300 rounded-xl px-4 py-2 text-sm text-gray-900 focus:outline-none focus:border-purple-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1">Telefon</label>
+                <input
+                  type="text"
+                  value={contactPage.phone}
+                  onChange={(e) => setContactPage({ ...contactPage, phone: e.target.value })}
+                  className="w-full border border-gray-300 rounded-xl px-4 py-2 text-sm text-gray-900 focus:outline-none focus:border-purple-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1">Çalışma Saatleri</label>
+                <input
+                  type="text"
+                  value={contactPage.workingHours}
+                  onChange={(e) => setContactPage({ ...contactPage, workingHours: e.target.value })}
+                  className="w-full border border-gray-300 rounded-xl px-4 py-2 text-sm text-gray-900 focus:outline-none focus:border-purple-500"
+                />
+              </div>
+            </div>
+            <button
+              onClick={async () => {
+                if (!settings) return;
+                const updated = { ...settings, contactPage };
+                const res = await fetch("/api/admin/settings", {
+                  method: "POST",
+                  headers: { ...AUTH_HEADER, "Content-Type": "application/json" },
+                  body: JSON.stringify(updated),
+                });
+                if (res.ok) { setSettings(updated); showSaveMsg("İletişim sayfası kaydedildi!"); }
+                else showSaveMsg("Hata oluştu.");
+              }}
+              className="mt-4 w-full text-white font-bold py-2 rounded-xl text-sm transition-colors"
+              style={{ background: "#5c1294" }}
+            >
+              Kaydet
+            </button>
+          </div>
+
           {/* Başvurular */}
           <div className="bg-white rounded-2xl shadow p-6">
             <div className="flex items-center justify-between mb-4">
@@ -452,12 +655,12 @@ export default function AdminPage() {
                   Yenile
                 </button>
                 <button
-                  onClick={downloadCSV}
+                  onClick={downloadExcel}
                   disabled={submissions.length === 0}
                   className="text-xs text-white font-bold px-3 py-1.5 rounded-lg transition-colors disabled:opacity-40"
                   style={{ background: "#5c1294" }}
                 >
-                  CSV İndir
+                  Excel İndir
                 </button>
               </div>
             </div>
