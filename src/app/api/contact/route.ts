@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { getSettings } from "@/lib/settings";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -18,100 +19,100 @@ export async function POST(req: NextRequest) {
   });
 
   const now = new Date().toLocaleString("tr-TR", { timeZone: "Europe/Istanbul" });
+  const settings = getSettings();
+  const logoHtml = settings.logo
+    ? `<img src="https://158.220.115.16${settings.logo}" alt="Logo" style="max-height:52px;object-fit:contain;display:block;" />`
+    : `<span style="font-size:28px;font-weight:900;font-style:italic;color:#fff;font-family:Arial Black,sans-serif;">${settings.logoText || "dijitürk"}</span>`;
 
   const html = `
 <!DOCTYPE html>
 <html lang="tr">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
-<body style="margin:0;padding:0;background:#f0ebf8;font-family:'Segoe UI',Arial,sans-serif;">
-<table width="100%" cellpadding="0" cellspacing="0" style="background:#f0ebf8;padding:32px 0;">
+<body style="margin:0;padding:0;background:#f3f4f6;font-family:'Segoe UI',Arial,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#f3f4f6;padding:32px 0;">
   <tr><td align="center">
-    <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(75,0,130,0.18);">
+    <table width="580" cellpadding="0" cellspacing="0" style="max-width:580px;width:100%;border-radius:16px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.15);">
 
       <!-- Header -->
       <tr>
-        <td style="background:linear-gradient(135deg,#1a0033 0%,#4b0082 60%,#7b2fbe 100%);padding:36px 40px 28px;">
+        <td style="background:linear-gradient(135deg,#400442 0%,#621e65 60%,#7b2fbe 100%);padding:32px 36px 24px;">
           <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
-              <td>
-                <div style="display:inline-block;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:6px 16px;margin-bottom:16px;">
-                  <span style="color:#e2c9ff;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;">Yeni Başvuru Bildirimi</span>
+              <td valign="middle">${logoHtml}</td>
+              <td align="right" valign="middle">
+                <div style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:6px 14px;display:inline-block;">
+                  <span style="color:#fff;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;">Yeni Başvuru</span>
                 </div>
-                <h1 style="color:#ffffff;margin:0 0 6px;font-size:26px;font-weight:800;letter-spacing:-0.5px;">dijitürk</h1>
-                <p style="color:#c4a8e8;margin:0;font-size:14px;">Online Başvuru Formu — Müşteri Bildirimi</p>
-              </td>
-              <td align="right" valign="top">
-                <div style="background:rgba(255,255,255,0.15);border-radius:50%;width:56px;height:56px;display:inline-block;line-height:56px;text-align:center;font-size:26px;">📋</div>
               </td>
             </tr>
+            <tr><td colspan="2" style="padding-top:16px;">
+              <p style="margin:0;color:#e9d5ff;font-size:13px;">Online Başvuru Formu — Müşteri Bildirimi</p>
+            </td></tr>
           </table>
         </td>
       </tr>
 
-      <!-- Alert bar -->
+      <!-- Zaman barı -->
       <tr>
-        <td style="background:#6d28d9;padding:12px 40px;">
-          <p style="margin:0;color:#ede9fe;font-size:13px;font-weight:500;">
-            ⏰ &nbsp;Başvuru Zamanı: <strong style="color:#fff;">${now}</strong>
-          </p>
+        <td style="background:#451f46;padding:10px 36px;">
+          <p style="margin:0;color:#e9d5ff;font-size:12px;">⏰ &nbsp;Başvuru Zamanı: <strong style="color:#fff;">${now}</strong></p>
         </td>
       </tr>
 
-      <!-- Body -->
+      <!-- Gövde -->
       <tr>
-        <td style="background:#ffffff;padding:36px 40px;">
+        <td style="background:#ffffff;padding:32px 36px;">
 
-          <p style="margin:0 0 24px;color:#4b0082;font-size:15px;font-weight:600;">Müşteri Bilgileri</p>
+          <p style="margin:0 0 20px;color:#400442;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1px;border-bottom:2px solid #f0e6ff;padding-bottom:10px;">Müşteri Bilgileri</p>
 
-          <!-- Info cards -->
-          <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+          <!-- Kartlar -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:20px;">
             <tr>
-              <td width="50%" style="padding:0 8px 16px 0;">
-                <div style="background:#f5f0ff;border:1px solid #ddd6fe;border-radius:12px;padding:16px 18px;">
-                  <p style="margin:0 0 4px;font-size:11px;color:#7c3aed;font-weight:700;letter-spacing:1px;text-transform:uppercase;">Ad Soyad</p>
-                  <p style="margin:0;font-size:15px;color:#1e1b4b;font-weight:700;">${name}</p>
+              <td width="50%" style="padding:0 8px 12px 0;">
+                <div style="background:#faf5ff;border:1.5px solid #e9d5ff;border-radius:10px;padding:14px 16px;">
+                  <p style="margin:0 0 3px;font-size:10px;color:#9333ea;font-weight:700;letter-spacing:1px;text-transform:uppercase;">Ad Soyad</p>
+                  <p style="margin:0;font-size:16px;color:#1a0033;font-weight:800;">${name}</p>
                 </div>
               </td>
-              <td width="50%" style="padding:0 0 16px 8px;">
-                <div style="background:#f5f0ff;border:1px solid #ddd6fe;border-radius:12px;padding:16px 18px;">
-                  <p style="margin:0 0 4px;font-size:11px;color:#7c3aed;font-weight:700;letter-spacing:1px;text-transform:uppercase;">Telefon</p>
-                  <p style="margin:0;font-size:15px;color:#1e1b4b;font-weight:700;">${phone}</p>
+              <td width="50%" style="padding:0 0 12px 8px;">
+                <div style="background:#faf5ff;border:1.5px solid #e9d5ff;border-radius:10px;padding:14px 16px;">
+                  <p style="margin:0 0 3px;font-size:10px;color:#9333ea;font-weight:700;letter-spacing:1px;text-transform:uppercase;">Telefon</p>
+                  <p style="margin:0;font-size:16px;color:#1a0033;font-weight:800;">${phone}</p>
                 </div>
               </td>
             </tr>
             <tr>
               <td width="50%" style="padding:0 8px 0 0;">
-                <div style="background:#f5f0ff;border:1px solid #ddd6fe;border-radius:12px;padding:16px 18px;">
-                  <p style="margin:0 0 4px;font-size:11px;color:#7c3aed;font-weight:700;letter-spacing:1px;text-transform:uppercase;">E-posta</p>
-                  <p style="margin:0;font-size:15px;color:#1e1b4b;font-weight:600;">${email || "—"}</p>
+                <div style="background:#faf5ff;border:1.5px solid #e9d5ff;border-radius:10px;padding:14px 16px;">
+                  <p style="margin:0 0 3px;font-size:10px;color:#9333ea;font-weight:700;letter-spacing:1px;text-transform:uppercase;">E-posta</p>
+                  <p style="margin:0;font-size:15px;color:#1a0033;font-weight:700;">${email || "—"}</p>
                 </div>
               </td>
               <td width="50%" style="padding:0 0 0 8px;">
-                <div style="background:#f5f0ff;border:1px solid #ddd6fe;border-radius:12px;padding:16px 18px;">
-                  <p style="margin:0 0 4px;font-size:11px;color:#7c3aed;font-weight:700;letter-spacing:1px;text-transform:uppercase;">Şehir</p>
-                  <p style="margin:0;font-size:15px;color:#1e1b4b;font-weight:600;">${city || "—"}</p>
+                <div style="background:#faf5ff;border:1.5px solid #e9d5ff;border-radius:10px;padding:14px 16px;">
+                  <p style="margin:0 0 3px;font-size:10px;color:#9333ea;font-weight:700;letter-spacing:1px;text-transform:uppercase;">Şehir</p>
+                  <p style="margin:0;font-size:15px;color:#1a0033;font-weight:700;">${city || "—"}</p>
                 </div>
               </td>
             </tr>
           </table>
 
-          <!-- Package highlight -->
-          <div style="background:linear-gradient(135deg,#4b0082,#7b2fbe);border-radius:12px;padding:20px 24px;margin-bottom:24px;">
-            <p style="margin:0 0 6px;font-size:11px;color:#d8b4fe;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;">Seçilen Paket</p>
-            <p style="margin:0;font-size:20px;color:#ffffff;font-weight:800;">${pkg || "Belirtilmedi"}</p>
+          <!-- Paket -->
+          <div style="background:linear-gradient(135deg,#400442 0%,#621e65 100%);border-radius:12px;padding:18px 22px;margin-bottom:20px;">
+            <p style="margin:0 0 4px;font-size:10px;color:#e9d5ff;font-weight:700;letter-spacing:2px;text-transform:uppercase;">Seçilen Paket</p>
+            <p style="margin:0;font-size:22px;color:#ffffff;font-weight:900;">${pkg || "Belirtilmedi"}</p>
           </div>
 
           ${message ? `
-          <!-- Message -->
-          <div style="background:#faf7ff;border-left:4px solid #7b2fbe;border-radius:0 8px 8px 0;padding:16px 20px;margin-bottom:24px;">
-            <p style="margin:0 0 6px;font-size:11px;color:#7c3aed;font-weight:700;letter-spacing:1px;text-transform:uppercase;">Mesaj / Not</p>
-            <p style="margin:0;font-size:14px;color:#374151;line-height:1.6;">${message}</p>
+          <div style="background:#fdfcff;border-left:4px solid #9333ea;border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:20px;">
+            <p style="margin:0 0 4px;font-size:10px;color:#9333ea;font-weight:700;letter-spacing:1px;text-transform:uppercase;">Mesaj / Not</p>
+            <p style="margin:0;font-size:14px;color:#1f2937;line-height:1.7;">${message}</p>
           </div>
           ` : ""}
 
           <!-- CTA -->
-          <div style="text-align:center;padding:8px 0 4px;">
-            <a href="tel:${phone}" style="display:inline-block;background:linear-gradient(135deg,#4b0082,#7b2fbe);color:#fff;text-decoration:none;font-weight:700;font-size:14px;padding:14px 36px;border-radius:50px;letter-spacing:0.5px;">
+          <div style="text-align:center;padding-top:8px;">
+            <a href="tel:${phone}" style="display:inline-block;background:linear-gradient(135deg,#400442,#621e65);color:#fff;text-decoration:none;font-weight:800;font-size:15px;padding:14px 40px;border-radius:50px;letter-spacing:0.5px;">
               📞 Müşteriyi Ara
             </a>
           </div>
@@ -121,15 +122,11 @@ export async function POST(req: NextRequest) {
 
       <!-- Footer -->
       <tr>
-        <td style="background:#1a0033;padding:20px 40px;">
+        <td style="background:#1a0028;padding:18px 36px;">
           <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
-              <td>
-                <p style="margin:0;color:#7c5faa;font-size:12px;">© 2026 <strong style="color:#a78bca;">Dijitürk</strong> — Otomatik sistem bildirimi</p>
-              </td>
-              <td align="right">
-                <p style="margin:0;color:#7c5faa;font-size:11px;">dijiturkabonelig.com</p>
-              </td>
+              <td><p style="margin:0;color:#a78bca;font-size:12px;">© 2026 <strong style="color:#d8b4fe;">Dijitürk</strong> — Otomatik sistem bildirimi</p></td>
+              <td align="right"><p style="margin:0;color:#7c5faa;font-size:11px;">dijiturkabonelig.com</p></td>
             </tr>
           </table>
         </td>
