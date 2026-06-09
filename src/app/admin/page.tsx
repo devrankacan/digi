@@ -2,6 +2,17 @@
 
 import { useState, useEffect, useRef } from "react";
 
+interface Submission {
+  id: string;
+  date: string;
+  name: string;
+  phone: string;
+  email: string;
+  city: string;
+  package: string;
+  message: string;
+}
+
 interface Package {
   id: string;
   label: string;
@@ -44,6 +55,8 @@ export default function AdminPage() {
   const [saveMsg, setSaveMsg] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
+  const [submissions, setSubmissions] = useState<Submission[]>([]);
+  const [subLoading, setSubLoading] = useState(false);
   const [selectedFileName, setSelectedFileName] = useState("");
 
   useEffect(() => {
@@ -54,7 +67,7 @@ export default function AdminPage() {
   }, []);
 
   useEffect(() => {
-    if (authed) fetchSettings();
+    if (authed) { fetchSettings(); fetchSubmissions(); }
   }, [authed]);
 
   async function fetchSettings() {
@@ -68,6 +81,17 @@ export default function AdminPage() {
       setContact(data.contact);
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function fetchSubmissions() {
+    setSubLoading(true);
+    try {
+      const res = await fetch("/api/admin/submissions", { headers: AUTH_HEADER });
+      const data: Submission[] = await res.json();
+      setSubmissions(data);
+    } finally {
+      setSubLoading(false);
     }
   }
 
@@ -146,6 +170,19 @@ export default function AdminPage() {
     setUploading(false);
     if (fileRef.current) fileRef.current.value = "";
     setSelectedFileName("");
+  }
+
+  function downloadCSV() {
+    const headers = ["Tarih", "Ad Soyad", "Telefon", "E-posta", "Şehir", "Paket", "Mesaj"];
+    const rows = submissions.map((s) => [
+      s.date, s.name, s.phone, s.email, s.city, s.package, s.message,
+    ].map((v) => `"${String(v).replace(/"/g, '""')}"`).join(","));
+    const csv = "﻿" + [headers.join(","), ...rows].join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a"); a.href = url;
+    a.download = `basvurular_${new Date().toISOString().slice(0,10)}.csv`;
+    a.click(); URL.revokeObjectURL(url);
   }
 
   function addPackage() {
@@ -399,6 +436,69 @@ export default function AdminPage() {
               Kaydet
             </button>
           </div>
+
+          {/* Başvurular */}
+          <div className="bg-white rounded-2xl shadow p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h2 className="text-lg font-black" style={{ color: "#5c1294" }}>Başvurular</h2>
+                <p className="text-xs text-gray-400 mt-0.5">{submissions.length} başvuru</p>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={fetchSubmissions}
+                  className="text-xs border border-gray-300 px-3 py-1.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors"
+                >
+                  Yenile
+                </button>
+                <button
+                  onClick={downloadCSV}
+                  disabled={submissions.length === 0}
+                  className="text-xs text-white font-bold px-3 py-1.5 rounded-lg transition-colors disabled:opacity-40"
+                  style={{ background: "#5c1294" }}
+                >
+                  CSV İndir
+                </button>
+              </div>
+            </div>
+
+            {subLoading ? (
+              <p className="text-center text-gray-400 text-sm py-6">Yükleniyor...</p>
+            ) : submissions.length === 0 ? (
+              <p className="text-center text-gray-400 text-sm py-6">Henüz başvuru yok.</p>
+            ) : (
+              <div className="overflow-x-auto -mx-2">
+                <table className="w-full text-xs min-w-[600px]">
+                  <thead>
+                    <tr style={{ background: "#f5f0ff" }}>
+                      {["Tarih", "Ad Soyad", "Telefon", "E-posta", "Şehir", "Paket"].map((h) => (
+                        <th key={h} className="text-left px-3 py-2 font-bold text-gray-600 whitespace-nowrap first:rounded-l-lg last:rounded-r-lg">
+                          {h}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {submissions.map((s, i) => (
+                      <tr key={s.id} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                        <td className="px-3 py-2 text-gray-500 whitespace-nowrap">{s.date}</td>
+                        <td className="px-3 py-2 font-semibold text-gray-800 whitespace-nowrap">{s.name}</td>
+                        <td className="px-3 py-2 text-gray-700 whitespace-nowrap">{s.phone}</td>
+                        <td className="px-3 py-2 text-gray-600 whitespace-nowrap">{s.email || "—"}</td>
+                        <td className="px-3 py-2 text-gray-600 whitespace-nowrap">{s.city || "—"}</td>
+                        <td className="px-3 py-2 whitespace-nowrap">
+                          <span className="inline-block px-2 py-0.5 rounded-full text-white text-xs font-bold" style={{ background: "#5c1294" }}>
+                            {s.package || "—"}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+
         </div>
       )}
     </div>

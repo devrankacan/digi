@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
-import { getSettings } from "@/lib/settings";
+import { getSettings, addSubmission } from "@/lib/settings";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -167,6 +167,8 @@ export async function POST(req: NextRequest) {
 </body>
 </html>
   `;
+
+  addSubmission({ name, phone, email: email || "", city: city || "", package: pkg || "", message: message || "" });
 
   await transporter.sendMail({
     from: `"Dijitürk Kampanya" <${process.env.SMTP_USER}>`,
