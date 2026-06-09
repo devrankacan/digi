@@ -54,7 +54,17 @@ export default function ContactForm({ packages, contact, logo, logoText }: Conta
   };
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "linear-gradient(160deg, #4a0080 0%, #6b1fa8 50%, #5c1294 100%)" }}>
+    <div
+      className="min-h-screen flex flex-col"
+      style={{
+        background: "#3b0a6e",
+        backgroundImage: `
+          radial-gradient(ellipse 80% 60% at 50% 10%, rgba(120,40,180,0.7) 0%, transparent 70%),
+          radial-gradient(ellipse 60% 50% at 50% 50%, rgba(90,20,150,0.5) 0%, transparent 70%),
+          linear-gradient(180deg, #2a0550 0%, #3b0a6e 40%, #2a0550 100%)
+        `,
+      }}
+    >
 
       {/* Nav */}
       <nav style={{ background: "rgba(0,0,0,0.25)" }}>
