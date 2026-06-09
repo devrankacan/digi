@@ -4,9 +4,24 @@ import path from "path";
 const filePath = path.join(process.cwd(), "src/data/settings.json");
 const submissionsPath = path.join(process.cwd(), "src/data/submissions.json");
 
+const defaultSettings = {
+  logo: null,
+  logoText: "dijitürk",
+  contact: { whatsapp: "", whatsappDisplay: "", navLinks: [], footerText: "" },
+  packages: [],
+  about: { title: "Hakkımızda", content: "", address: "", email: "", phone: "" },
+  contactPage: { title: "İletişim", description: "", address: "", email: "", phone: "", workingHours: "" },
+};
+
 export function getSettings() {
   const raw = fs.readFileSync(filePath, "utf-8");
-  return JSON.parse(raw);
+  const data = JSON.parse(raw);
+  return {
+    ...defaultSettings,
+    ...data,
+    about: { ...defaultSettings.about, ...data.about },
+    contactPage: { ...defaultSettings.contactPage, ...data.contactPage },
+  };
 }
 
 export function saveSettings(data: unknown) {

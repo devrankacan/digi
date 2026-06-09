@@ -1,6 +1,8 @@
 import { getSettings } from "@/lib/settings";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 export default function HakkimizdaPage() {
   const settings = getSettings();
   const about = settings.about;
