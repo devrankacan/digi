@@ -136,7 +136,8 @@ export default function AdminPage() {
     });
     if (res.ok) {
       const data = await res.json();
-      setSettings((prev) => prev ? { ...prev, logo: data.logo } : prev);
+      const logoWithBust = `${data.logo}?t=${Date.now()}`;
+      setSettings((prev) => prev ? { ...prev, logo: logoWithBust } : prev);
       showSaveMsg("Logo yüklendi!");
     } else {
       showSaveMsg("Logo yüklenemedi.");

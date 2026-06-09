@@ -1,6 +1,8 @@
 import { getSettings } from "@/lib/settings";
 import ContactForm from "./components/ContactForm";
 
+export const dynamic = "force-dynamic";
+
 export default function Home() {
   const settings = getSettings();
   return (
