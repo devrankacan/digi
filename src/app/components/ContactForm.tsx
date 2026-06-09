@@ -92,8 +92,8 @@ export default function ContactForm({ packages, contact, logo, logoText }: Conta
       </nav>
 
       {/* Main */}
-      <main className="flex-1 flex flex-col items-center px-5 pt-8 pb-10 relative" style={{ zIndex: 2 }}>
-        <div className="w-full max-w-sm">
+      <main className="flex-1 flex flex-col items-center px-8 pt-8 pb-10 relative" style={{ zIndex: 2 }}>
+        <div className="w-full max-w-xs">
 
           {/* Logo */}
           <div className="text-center mb-5">
