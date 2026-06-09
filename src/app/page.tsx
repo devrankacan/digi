@@ -9,7 +9,7 @@ const packages = [
 ];
 
 export default function Home() {
-  const [form, setForm] = useState({ ad: "", soyad: "", telefon: "", paket: "" });
+  const [form, setForm] = useState({ ad: "", soyad: "", telefon: "", eposta: "", sehir: "", paket: "" });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -22,12 +22,14 @@ export default function Home() {
         body: JSON.stringify({
           name: `${form.ad} ${form.soyad}`,
           phone: form.telefon,
+          email: form.eposta,
+          city: form.sehir,
           package: packages.find((p) => p.id === form.paket)?.label || form.paket,
         }),
       });
       if (res.ok) {
         setStatus("success");
-        setForm({ ad: "", soyad: "", telefon: "", paket: "" });
+        setForm({ ad: "", soyad: "", telefon: "", eposta: "", sehir: "", paket: "" });
       } else {
         setStatus("error");
       }
@@ -131,6 +133,30 @@ export default function Home() {
                   value={form.telefon}
                   onChange={(e) => setForm({ ...form, telefon: e.target.value })}
                   placeholder="10 Haneli Telefon Numaranız"
+                  className="w-full bg-white/10 border border-white/20 text-white placeholder-white/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-white/60 focus:bg-white/15"
+                />
+              </div>
+
+              {/* E-posta */}
+              <div>
+                <label className="text-white text-sm font-semibold block mb-1">E-posta:</label>
+                <input
+                  type="email"
+                  value={form.eposta}
+                  onChange={(e) => setForm({ ...form, eposta: e.target.value })}
+                  placeholder="ornek@email.com"
+                  className="w-full bg-white/10 border border-white/20 text-white placeholder-white/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-white/60 focus:bg-white/15"
+                />
+              </div>
+
+              {/* Şehir */}
+              <div>
+                <label className="text-white text-sm font-semibold block mb-1">Şehir:</label>
+                <input
+                  type="text"
+                  value={form.sehir}
+                  onChange={(e) => setForm({ ...form, sehir: e.target.value })}
+                  placeholder="İstanbul"
                   className="w-full bg-white/10 border border-white/20 text-white placeholder-white/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-white/60 focus:bg-white/15"
                 />
               </div>
