@@ -1,0 +1,15 @@
+{
+  "logo": null,
+  "logoText": "dijitürk",
+  "contact": {
+    "whatsapp": "905453267076",
+    "whatsappDisplay": "0 545 326 70 76",
+    "navLinks": ["Anasayfa", "Hakkımızda", "İletişim"],
+    "footerText": "© 2026 Dijitürk — Tüm hakları saklıdır."
+  },
+  "packages": [
+    { "id": "internet", "label": "Dijitürk İnternet", "desc": "İnternet + Taraftar Paketi", "price": "549₺" },
+    { "id": "spor", "label": "Sporun Yıldızı", "desc": "Sporun Yıldızı", "price": "459₺" },
+    { "id": "bayi", "label": "Bayilere Özel", "desc": "100 MBPS", "price": "399₺" }
+  ]
+}
