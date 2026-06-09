@@ -57,44 +57,31 @@ export default function ContactForm({ packages, contact, logo, logoText }: Conta
     <div
       className="min-h-screen flex flex-col relative overflow-hidden"
       style={{
-        background: "#400442",
-        backgroundImage: `
-          linear-gradient(180deg, #400442 0%, #4e0652 100%),
-          linear-gradient(90deg, #400442 0%, #400442 3%, #451f46 3%, #621e65 97%, #400442 97%, #400442 100%)
-        `,
-        backgroundBlendMode: "normal",
+        background: "linear-gradient(180deg, #4e0652 0%, #621e65 45%, #451f46 75%, #400442 100%)",
       }}
     >
-      {/* Çizgi içi degrade (merkez alan) */}
+      {/* Yatay renk bölgesi: dış koyu, iç açık */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: "linear-gradient(90deg, transparent 3%, #451f46 3%, #621e65 50%, #451f46 97%, transparent 97%)",
-          mixBlendMode: "normal",
+          zIndex: 0,
+          background: "linear-gradient(90deg, #400442 0%, #400442 5%, #5a1560 5%, #621e65 50%, #5a1560 95%, #400442 95%, #400442 100%)",
         }}
       />
-      {/* Dikey degrade overlay */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: "linear-gradient(180deg, #4e0652 0%, #621e65 40%, #451f46 70%, #400442 100%)",
-          opacity: 0.6,
-          mixBlendMode: "multiply",
-        }}
-      />
-      {/* Dekoratif dikey çizgiler - sol */}
-      <div className="absolute left-0 top-0 bottom-0 flex gap-1.5 pointer-events-none" style={{ paddingLeft: "10px" }}>
-        <div className="w-px h-full" style={{ background: "linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.15) 20%, rgba(255,255,255,0.08) 80%, transparent 100%)" }} />
-        <div className="w-px h-full" style={{ background: "linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.08) 20%, rgba(255,255,255,0.04) 80%, transparent 100%)" }} />
+
+      {/* Dekoratif dikey çizgiler - sol (z-index 1) */}
+      <div className="absolute top-0 bottom-0 pointer-events-none" style={{ left: "22px", zIndex: 1, display: "flex", gap: "5px" }}>
+        <div style={{ width: "2px", height: "100%", background: "linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.22) 15%, rgba(255,255,255,0.18) 85%, transparent 100%)" }} />
+        <div style={{ width: "2px", height: "100%", background: "linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.10) 15%, rgba(255,255,255,0.08) 85%, transparent 100%)" }} />
       </div>
-      {/* Dekoratif dikey çizgiler - sağ */}
-      <div className="absolute right-0 top-0 bottom-0 flex gap-1.5 pointer-events-none" style={{ paddingRight: "10px" }}>
-        <div className="w-px h-full" style={{ background: "linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.08) 20%, rgba(255,255,255,0.04) 80%, transparent 100%)" }} />
-        <div className="w-px h-full" style={{ background: "linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.15) 20%, rgba(255,255,255,0.08) 80%, transparent 100%)" }} />
+      {/* Dekoratif dikey çizgiler - sağ (z-index 1) */}
+      <div className="absolute top-0 bottom-0 pointer-events-none" style={{ right: "22px", zIndex: 1, display: "flex", gap: "5px" }}>
+        <div style={{ width: "2px", height: "100%", background: "linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.10) 15%, rgba(255,255,255,0.08) 85%, transparent 100%)" }} />
+        <div style={{ width: "2px", height: "100%", background: "linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.22) 15%, rgba(255,255,255,0.18) 85%, transparent 100%)" }} />
       </div>
 
       {/* Nav */}
-      <nav style={{ background: "rgba(0,0,0,0.25)" }}>
+      <nav className="relative" style={{ background: "rgba(0,0,0,0.25)", zIndex: 2 }}>
         <div className="max-w-lg mx-auto px-4 flex justify-center gap-10 py-3">
           {contact.navLinks.map((item) => (
             <a key={item} href="#" className="text-white text-sm font-semibold tracking-wide hover:text-yellow-300 transition-colors">
@@ -105,7 +92,7 @@ export default function ContactForm({ packages, contact, logo, logoText }: Conta
       </nav>
 
       {/* Main */}
-      <main className="flex-1 flex flex-col items-center px-5 pt-8 pb-10">
+      <main className="flex-1 flex flex-col items-center px-5 pt-8 pb-10 relative" style={{ zIndex: 2 }}>
         <div className="w-full max-w-sm">
 
           {/* Logo */}
