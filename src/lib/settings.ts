@@ -6,6 +6,7 @@ const submissionsPath = path.join(process.cwd(), "src/data/submissions.json");
 
 const defaultSettings = {
   logo: null,
+  heroImage: null,
   logoText: "dijitürk",
   contact: { whatsapp: "", whatsappDisplay: "", navLinks: [], footerText: "" },
   packages: [],

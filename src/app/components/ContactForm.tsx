@@ -21,9 +21,10 @@ interface ContactFormProps {
   contact: Contact;
   logo: string | null;
   logoText: string;
+  heroImage?: string | null;
 }
 
-export default function ContactForm({ packages, contact, logo, logoText }: ContactFormProps) {
+export default function ContactForm({ packages, contact, logo, logoText, heroImage }: ContactFormProps) {
   const [form, setForm] = useState({ ad: "", soyad: "", telefon: "", eposta: "", sehir: "", paket: "" });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
@@ -91,10 +92,23 @@ export default function ContactForm({ packages, contact, logo, logoText }: Conta
 
       {/* Main */}
       <main className="flex-1 flex flex-col items-center px-8 pt-8 pb-10 relative" style={{ zIndex: 2 }}>
-        {/* Desktop: two-column grid | Mobile: single column */}
-        <div className="w-full max-w-xs md:max-w-4xl md:grid md:grid-cols-2 md:gap-14 md:items-start">
+        {/* Desktop: hero görseli varsa 3 kolon, yoksa 2 kolon | Mobile: tek kolon */}
+        <div className={`w-full max-w-xs ${heroImage ? "md:max-w-6xl md:grid md:grid-cols-[1fr_auto_420px]" : "md:max-w-4xl md:grid md:grid-cols-2"} md:gap-0 md:items-stretch`}>
 
-          {/* SOL KOLON: Logo + Başlık + WhatsApp */}
+          {/* HERO GÖRSEL - sadece masaüstünde, sadece görsel varsa */}
+          {heroImage && (
+            <>
+              <div className="hidden md:block rounded-2xl overflow-hidden" style={{ minHeight: "520px" }}>
+                <img src={heroImage} alt="Kampanya" className="w-full h-full object-cover" style={{ borderRadius: "16px" }} />
+              </div>
+              {/* Dikey ayraç */}
+              <div className="hidden md:flex items-center justify-center px-8">
+                <div style={{ width: "1.5px", height: "85%", background: "rgba(255,255,255,0.15)" }} />
+              </div>
+            </>
+          )}
+
+          {/* FORM KOLON: Logo + Başlık + WhatsApp + Form */}
           <div className="md:pt-4">
             {/* Logo */}
             <div className="text-center mb-5">

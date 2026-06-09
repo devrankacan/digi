@@ -11,6 +11,7 @@ export default function Home() {
       contact={settings.contact}
       logo={settings.logo}
       logoText={settings.logoText}
+      heroImage={(settings as Record<string, unknown>).heroImage as string | null}
     />
   );
 }

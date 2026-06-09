@@ -18,8 +18,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Dosya bulunamadı" }, { status: 400 });
   }
 
+  const type = (formData.get("type") as string) || "logo";
   const ext = file.name.split(".").pop() || "png";
-  const filename = `logo.${ext}`;
+  const filename = `${type}.${ext}`;
   const uploadsDir = path.join(process.cwd(), "public/uploads");
 
   if (!fs.existsSync(uploadsDir)) {
@@ -29,10 +30,14 @@ export async function POST(req: NextRequest) {
   const buffer = Buffer.from(await file.arrayBuffer());
   fs.writeFileSync(path.join(uploadsDir, filename), buffer);
 
-  const logoUrl = `/uploads/${filename}`;
+  const url = `/uploads/${filename}`;
   const settings = getSettings();
-  settings.logo = logoUrl;
+  if (type === "hero") {
+    (settings as Record<string, unknown>).heroImage = url;
+  } else {
+    settings.logo = url;
+  }
   saveSettings(settings);
 
-  return NextResponse.json({ success: true, logo: logoUrl });
+  return NextResponse.json({ success: true, url, logo: type === "logo" ? url : settings.logo });
 }
