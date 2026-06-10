@@ -241,8 +241,9 @@ export default function AdminPage() {
         body: fd,
       });
       if (res.ok) {
-        const data = await res.json();
-        setHeroImage(`${data.url}?t=${Date.now()}`);
+        const ts = Date.now();
+        setHeroImage(null);
+        setTimeout(() => setHeroImage(`/uploads/hero.png?t=${ts}`), 50);
         setHeroFileName("");
         showSaveMsg("Kampanya görseli yüklendi!");
       } else {
