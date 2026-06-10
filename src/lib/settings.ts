@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { unstable_noStore as noStore } from "next/cache";
 
 const filePath = path.join(process.cwd(), "src/data/settings.json");
 const submissionsPath = path.join(process.cwd(), "src/data/submissions.json");
@@ -16,6 +17,7 @@ const defaultSettings = {
 };
 
 export function getSettings() {
+  noStore();
   const raw = fs.readFileSync(filePath, "utf-8");
   const data = JSON.parse(raw);
   return {
