@@ -338,7 +338,7 @@ export default function ContactForm({ packages, contact, logo, logoText, heroIma
       {/* DESTEK HATLARI */}
       {phoneDisplay && (
         <div style={{ background: "#f5f5f5", padding: "28px 20px" }}>
-          <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", flexWrap: "wrap", gap: "16px", alignItems: "center", justifyContent: "flex-end" }}>
+          <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", flexWrap: "wrap", gap: "16px", alignItems: "center", justifyContent: "center" }}>
             {[{ label: "Satış Destek Hattı", icon: "📞" }, { label: "Ürün Destek Hattı", icon: "🎧" }].map(item => (
               <div key={item.label} style={{ display: "flex", alignItems: "center", gap: "12px", background: "#fff", border: "1px solid #e5e5e5", borderRadius: "8px", padding: "12px 20px" }}>
                 <div style={{ width: "38px", height: "38px", background: C.accent, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", flexShrink: 0 }}>
