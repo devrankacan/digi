@@ -215,7 +215,8 @@ export default function ContactForm({ packages, contact, logo, logoText, heroIma
             ? <video src={heroImage} style={{ width: "100%", maxHeight: "460px", objectFit: "cover", display: "block" }} autoPlay muted loop playsInline />
             : <img src={heroImage} alt="Kampanya" style={{ width: "100%", maxHeight: "460px", objectFit: "cover", display: "block" }} />}
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(26,20,64,0.85) 0%, rgba(26,20,64,0.4) 55%, transparent 100%)" }} />
-          <div style={{ position: "absolute", top: "50%", left: "5%", transform: "translateY(-50%)", maxWidth: "480px" }}>
+          <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "100%", maxWidth: "1200px", padding: "0 20px" }}>
+            <div style={{ maxWidth: "480px" }}>
             <p style={{ margin: "0 0 6px", fontSize: "13px", color: "rgba(255,255,255,0.75)" }}>En Güncel Kampanyalarımız</p>
             <h1 style={{ margin: "0 0 14px", fontSize: "38px", fontWeight: 900, color: "#fff", lineHeight: 1.1 }}>Kampanyalar</h1>
             <p style={{ margin: "0 0 6px", fontSize: "14px", color: "rgba(255,255,255,0.85)", lineHeight: 1.6 }}>
@@ -223,6 +224,7 @@ export default function ContactForm({ packages, contact, logo, logoText, heroIma
             </p>
             <p style={{ margin: "0 0 18px", fontSize: "15px", fontWeight: 700, color: "#fff" }}>Hemen Başvuru Yapın Sizi Arayalım!</p>
             <button onClick={() => setShowPopup(true)} className="basvuru-btn">Başvuru Yap</button>
+            </div>
           </div>
         </div>
       )}
