@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import "./globals.css";
-import { getSettings } from "@/lib/settings";
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -19,12 +18,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const settings = getSettings();
-  const faviconUrl = (settings as Record<string, unknown>).faviconUrl as string | null;
   return (
     <html lang="tr" className={`${nunito.variable} h-full antialiased`}>
       <head>
-        {faviconUrl && <link rel="icon" href={faviconUrl} />}
+        <link rel="icon" href="/uploads/favicon.png" />
       </head>
       <body className="min-h-full flex flex-col font-[family-name:var(--font-nunito)]">{children}</body>
     </html>

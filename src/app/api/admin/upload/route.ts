@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
 
   const type = (formData.get("type") as string) || "logo";
   const ext = file.name.split(".").pop() || "png";
-  const filename = `${type}.${ext}`;
+  const filename = type === "favicon" ? "favicon.png" : `${type}.${ext}`;
   const uploadsDir = path.join(process.cwd(), "public/uploads");
 
   if (!fs.existsSync(uploadsDir)) {
