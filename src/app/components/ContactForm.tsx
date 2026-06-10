@@ -137,42 +137,42 @@ export default function ContactForm({ packages, contact, logo, logoText, heroIma
         .nav-a:hover { color: #fff; }
       `}</style>
 
-      {/* TOP BAR - koyu lacivert, referans siteyle birebir */}
-      <div className="top-bar" style={{ background: "#12103a", borderBottom: "1px solid rgba(255,255,255,0.08)", justifyContent: "space-between", alignItems: "center", padding: "7px 28px", fontSize: "13px", color: "rgba(255,255,255,0.75)" }}>
-        <div style={{ display: "flex", gap: "24px", alignItems: "center" }}>
+      {/* TOP BAR */}
+      <div className="top-bar" style={{ background: "#0d0b2e", justifyContent: "space-between", alignItems: "center", padding: "7px 28px", fontSize: "13px", color: "rgba(255,255,255,0.7)" }}>
+        <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
           {contact.email && (
             <span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-              <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+              <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
               {contact.email}
             </span>
           )}
           {phoneDisplay && (
             <span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-              <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+              <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
               {phoneDisplay}
             </span>
           )}
         </div>
-        <span style={{ fontSize: "12px" }}>Dijitürk Resmi Satış Ortağıdır</span>
+        <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.55)" }}>Dijitürk Resmi Satış Ortağıdır</span>
       </div>
 
-      {/* HEADER - gradient mor, referans siteyle birebir */}
-      <header style={{ background: "linear-gradient(90deg, #1a1060 0%, #7b1fa2 60%, #9c27b0 100%)", position: "sticky", top: 0, zIndex: 100, boxShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>
-        <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 28px", display: "flex", alignItems: "center", justifyContent: "space-between", height: "72px" }}>
+      {/* HEADER - lacivert → parlak magenta gradient */}
+      <header style={{ background: "linear-gradient(90deg, #150d45 0%, #6a1b9a 45%, #ab008c 75%, #c2007a 100%)", position: "sticky", top: 0, zIndex: 100, boxShadow: "0 3px 16px rgba(0,0,0,0.5)" }}>
+        <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 28px", display: "flex", alignItems: "center", gap: "32px", height: "70px" }}>
           <a href="/" style={{ flexShrink: 0, textDecoration: "none" }}>
             {logo
-              ? <img src={logo} alt={logoText} style={{ maxHeight: "52px", maxWidth: "160px", objectFit: "contain" }} />
-              : <span style={{ fontSize: "28px", fontWeight: 900, fontStyle: "italic", color: "#e41738", fontFamily: "'Arial Black', Impact, sans-serif" }}>{logoText}</span>}
+              ? <img src={logo} alt={logoText} style={{ maxHeight: "50px", maxWidth: "160px", objectFit: "contain" }} />
+              : <span style={{ fontSize: "30px", fontWeight: 900, fontStyle: "italic", color: "#e41738", fontFamily: "'Arial Black', Impact, sans-serif", letterSpacing: "-1px" }}>{logoText}</span>}
           </a>
-          <nav className="desktop-nav" style={{ gap: "28px", alignItems: "center", flex: 1, justifyContent: "center" }}>
+          <nav className="desktop-nav" style={{ gap: "22px", alignItems: "center", flex: 1 }}>
             <a href="/" className="nav-a">Ana Sayfa</a>
             <a href="/hakkimizda" className="nav-a">Hakkımızda</a>
             <a href="/iletisim" className="nav-a">İletişim</a>
           </nav>
           <button onClick={() => setShowPopup(true)}
-            style={{ background: "transparent", color: "#fff", border: "2px solid rgba(255,255,255,0.7)", padding: "9px 22px", borderRadius: "4px", fontWeight: 700, fontSize: "14px", cursor: "pointer", whiteSpace: "nowrap", transition: "all 0.2s" }}
-            onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.15)"; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}>
+            style={{ background: "transparent", color: "#fff", border: "none", padding: "8px 4px", fontWeight: 700, fontSize: "14px", cursor: "pointer", whiteSpace: "nowrap", flexShrink: 0 }}
+            onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.opacity = "0.75"; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.opacity = "1"; }}>
             Başvuru Yap
           </button>
         </div>
