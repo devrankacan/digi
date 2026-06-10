@@ -318,7 +318,7 @@ export default function ContactForm({ packages, contact, logo, logoText, heroIma
 
       {/* DİĞER KAMPANYALAR */}
       {packages.length > 1 && (
-        <section style={{ position: "relative", padding: "40px 20px", textAlign: "center", overflow: "hidden", background: campaignBannerImage ? "transparent" : "linear-gradient(135deg, #3b1a6e 0%, #8d1d82 100%)" }}>
+        <section style={{ position: "relative", padding: "80px 20px", textAlign: "center", overflow: "hidden", background: campaignBannerImage ? "transparent" : "linear-gradient(135deg, #3b1a6e 0%, #8d1d82 100%)" }}>
           {campaignBannerImage && (
             <>
               <img src={campaignBannerImage} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }} onError={e => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />
