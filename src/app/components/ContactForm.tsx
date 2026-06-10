@@ -108,6 +108,31 @@ function BaşvuruFormu({ packages, onSuccess }: { packages: Package[]; onSuccess
   );
 }
 
+function PackageForm({ packages, phoneDisplay, textMuted, formBg }: { packages: Package[]; phoneDisplay: string; textMuted: string; formBg: string }) {
+  const [success, setSuccess] = useState(false);
+  return (
+    <div className="form-col-width" style={{ flexShrink: 0, background: formBg, borderRadius: "10px", padding: "24px", border: "1px solid rgba(255,255,255,0.1)" }}>
+      <h3 style={{ margin: "0 0 4px", fontSize: "18px", fontWeight: 900, color: "#fff" }}>Hemen Sizi Arayalım</h3>
+      <p style={{ margin: "0 0 16px", fontSize: "13px", color: textMuted }}>Hemen üye ol! Sizde en cazip kampanyalardan faydalan!</p>
+      {success ? (
+        <div style={{ textAlign: "center", padding: "28px 0" }}>
+          <div style={{ fontSize: "44px", marginBottom: "10px" }}>🎉</div>
+          <h3 style={{ color: "#fff", marginBottom: "8px" }}>Başvurunuz Alındı!</h3>
+          <p style={{ color: textMuted, fontSize: "13px", marginBottom: "14px" }}>Müşteri temsilcimiz en kısa sürede sizi arayacak.</p>
+          <button onClick={() => setSuccess(false)} style={{ color: "#c084fc", background: "none", border: "none", cursor: "pointer", textDecoration: "underline", fontSize: "13px" }}>Yeni başvuru yap</button>
+        </div>
+      ) : (
+        <BaşvuruFormu packages={packages} onSuccess={() => setSuccess(true)} />
+      )}
+      {phoneDisplay && (
+        <div style={{ marginTop: "12px", background: "rgba(141,29,130,0.25)", borderRadius: "4px", padding: "11px", textAlign: "center", fontWeight: 700, color: "#fff", fontSize: "15px", border: "1px solid rgba(141,29,130,0.5)" }}>
+          HEMEN ARA : {phoneDisplay}
+        </div>
+      )}
+    </div>
+  );
+}
+
 const navLinks = [
   { href: "/", label: "Ana Sayfa" },
   { href: "/sporun-yildizi", label: "Sporun Yıldızı" },
@@ -118,7 +143,6 @@ const navLinks = [
 
 export default function ContactForm({ packages, contact, logo, logoText, heroImage }: ContactFormProps) {
   const [showPopup, setShowPopup] = useState(false);
-  const [formSuccess, setFormSuccess] = useState(false);
   const [popupSuccess, setPopupSuccess] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -271,60 +295,22 @@ export default function ContactForm({ packages, contact, logo, logoText, heroIma
                 </div>
               </div>
 
-              {/* SAĞ: Form (sadece 1. pakette) veya bilgi kutusu */}
-              {idx === 0 ? (
-                <div className="form-col-width" style={{ flexShrink: 0, background: C.formBg, borderRadius: "10px", padding: "24px", border: "1px solid rgba(255,255,255,0.1)" }}>
-                  <h3 style={{ margin: "0 0 4px", fontSize: "18px", fontWeight: 900, color: "#fff" }}>Hemen Sizi Arayalım</h3>
-                  <p style={{ margin: "0 0 16px", fontSize: "13px", color: C.textMuted }}>Hemen üye ol! Sizde en cazip kampanyalardan faydalan!</p>
-                  {formSuccess ? (
-                    <div style={{ textAlign: "center", padding: "28px 0" }}>
-                      <div style={{ fontSize: "44px", marginBottom: "10px" }}>🎉</div>
-                      <h3 style={{ color: "#fff", marginBottom: "8px" }}>Başvurunuz Alındı!</h3>
-                      <p style={{ color: C.textMuted, fontSize: "13px", marginBottom: "14px" }}>Müşteri temsilcimiz en kısa sürede sizi arayacak.</p>
-                      <button onClick={() => setFormSuccess(false)}
-                        style={{ color: "#c084fc", background: "none", border: "none", cursor: "pointer", textDecoration: "underline", fontSize: "13px" }}>
-                        Yeni başvuru yap
-                      </button>
-                    </div>
-                  ) : (
-                    <BaşvuruFormu packages={packages} onSuccess={() => setFormSuccess(true)} />
-                  )}
-                  {phoneDisplay && (
-                    <div style={{ marginTop: "12px", background: "rgba(141,29,130,0.25)", borderRadius: "4px", padding: "11px", textAlign: "center", fontWeight: 700, color: "#fff", fontSize: "15px", border: "1px solid rgba(141,29,130,0.5)" }}>
-                      HEMEN ARA : {phoneDisplay}
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <div className="form-col-width" style={{ flexShrink: 0 }}>
-                  {phoneDisplay && (
-                    <div style={{ background: "#0f0a2e", borderRadius: "10px", padding: "24px", textAlign: "center", border: "1px solid rgba(255,255,255,0.1)" }}>
-                      <div style={{ fontSize: "13px", color: C.textMuted, marginBottom: "6px" }}>Bilgi &amp; Başvuru</div>
-                      <div style={{ fontSize: "24px", fontWeight: 900, color: "#fff", marginBottom: "14px" }}>{phoneDisplay}</div>
-                      <button onClick={() => setShowPopup(true)} className="basvuru-btn">Online Başvuru Yap</button>
-                    </div>
-                  )}
-                </div>
-              )}
+              {/* SAĞ: Form */}
+              <PackageForm
+                key={pkg.id}
+                packages={packages}
+                phoneDisplay={phoneDisplay}
+                textMuted={C.textMuted}
+                formBg={C.formBg}
+              />
             </div>
           </div>
         </section>
       )) : (
         /* Paket yoksa sadece form ortada */
         <section style={{ padding: "60px 20px" }}>
-          <div style={{ maxWidth: "460px", margin: "0 auto", background: C.formBg, borderRadius: "10px", padding: "32px", border: "1px solid rgba(255,255,255,0.1)" }}>
-            <h3 style={{ margin: "0 0 4px", fontSize: "20px", fontWeight: 900, color: "#fff" }}>Hemen Sizi Arayalım</h3>
-            <p style={{ margin: "0 0 16px", fontSize: "13px", color: C.textMuted }}>Hemen üye ol! Sizde en cazip kampanyalardan faydalan!</p>
-            {formSuccess ? (
-              <div style={{ textAlign: "center", padding: "28px 0" }}>
-                <div style={{ fontSize: "44px", marginBottom: "10px" }}>🎉</div>
-                <h3 style={{ color: "#fff", marginBottom: "8px" }}>Başvurunuz Alındı!</h3>
-                <p style={{ color: C.textMuted, fontSize: "13px", marginBottom: "14px" }}>Müşteri temsilcimiz en kısa sürede sizi arayacak.</p>
-                <button onClick={() => setFormSuccess(false)} style={{ color: "#c084fc", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}>Yeni başvuru yap</button>
-              </div>
-            ) : (
-              <BaşvuruFormu packages={[]} onSuccess={() => setFormSuccess(true)} />
-            )}
+          <div style={{ maxWidth: "460px", margin: "0 auto" }}>
+            <PackageForm packages={[]} phoneDisplay={phoneDisplay} textMuted={C.textMuted} formBg={C.formBg} />
           </div>
         </section>
       )}
