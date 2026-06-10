@@ -167,7 +167,7 @@ export default function ContactForm({ packages, contact, logo, logoText, heroIma
             padding: "0 24px",
             display: "flex",
             alignItems: "center",
-            height: "64px",
+            height: "80px",
             gap: "24px",
             boxShadow: "0 4px 24px rgba(0,0,0,0.4)",
           }}>
