@@ -160,7 +160,7 @@ export default function ContactForm({ packages, contact, logo, logoText, heroIma
         </div>
 
         {/* YÜZEN ANA MENÜ ÇUBUĞU */}
-        <div style={{ maxWidth: "1160px", margin: "0 auto 12px", padding: "0 16px" }}>
+        <div style={{ maxWidth: "1160px", margin: "0 auto", padding: "10px 16px 14px" }}>
           <div style={{
             background: "linear-gradient(90deg, #3b0764 0%, #6b21a8 40%, #a21caf 75%, #c026d3 100%)",
             borderRadius: "16px",
