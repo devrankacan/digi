@@ -242,9 +242,11 @@ export default function AdminPage() {
     if (res.ok) {
       const data = await res.json();
       setHeroImage(`${data.url}?t=${Date.now()}`);
+      setHeroFileName("");
       showSaveMsg("Kampanya görseli yüklendi!");
     } else {
-      showSaveMsg("Görsel yüklenemedi.");
+      const err = await res.text();
+      showSaveMsg(`Hata: ${res.status} - ${err.slice(0, 80)}`);
     }
     setHeroUploading(false);
     if (heroFileRef.current) heroFileRef.current.value = "";

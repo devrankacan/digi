@@ -3,6 +3,8 @@ import fs from "fs";
 import path from "path";
 import { getSettings, saveSettings } from "@/lib/settings";
 
+export const config = { api: { bodyParser: false } };
+
 const AUTH_TOKEN = "Bearer dijiturkadmin";
 
 export async function POST(req: NextRequest) {
