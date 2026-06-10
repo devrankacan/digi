@@ -180,7 +180,7 @@ export default function AdminPage() {
 
   function showSaveMsg(msg: string) {
     setSaveMsg(msg);
-    setTimeout(() => setSaveMsg(""), 2500);
+    setTimeout(() => setSaveMsg(""), 5000);
   }
 
   async function handleLogoUpload() {
@@ -231,7 +231,6 @@ export default function AdminPage() {
     const file = heroFileRef.current?.files?.[0];
     if (!file) { showSaveMsg("Lütfen önce bir dosya seçin."); return; }
     setHeroUploading(true);
-    showSaveMsg("Yükleniyor...");
     try {
       const fd = new FormData();
       fd.append("file", file);
