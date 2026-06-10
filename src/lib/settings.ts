@@ -9,7 +9,7 @@ const defaultSettings = {
   heroImage: null,
   logoText: "dijitürk",
   notificationEmail: "",
-  contact: { whatsapp: "", whatsappDisplay: "", navLinks: [], footerText: "" },
+  contact: { whatsapp: "", whatsappDisplay: "", navLinks: [], footerText: "", phone: "", email: "" },
   packages: [],
   about: { title: "Hakkımızda", content: "", address: "", email: "", phone: "" },
   contactPage: { title: "İletişim", description: "", address: "", email: "", phone: "", workingHours: "" },
@@ -21,6 +21,7 @@ export function getSettings() {
   return {
     ...defaultSettings,
     ...data,
+    contact: { ...defaultSettings.contact, ...data.contact },
     about: { ...defaultSettings.about, ...data.about },
     contactPage: { ...defaultSettings.contactPage, ...data.contactPage },
   };
