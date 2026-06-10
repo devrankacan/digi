@@ -12,6 +12,7 @@ export default function Home() {
       logo={settings.logo}
       logoText={settings.logoText}
       heroImage={(settings as Record<string, unknown>).heroImage as string | null}
+      campaignBannerImage={(settings as Record<string, unknown>).campaignBannerImage as string | null}
     />
   );
 }

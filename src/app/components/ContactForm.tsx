@@ -25,6 +25,7 @@ interface ContactFormProps {
   logo: string | null;
   logoText: string;
   heroImage?: string | null;
+  campaignBannerImage?: string | null;
 }
 
 // Renkler - referans siteyle birebir
@@ -141,7 +142,7 @@ const navLinks = [
   { href: "/iletisim", label: "İletişim" },
 ];
 
-export default function ContactForm({ packages, contact, logo, logoText, heroImage }: ContactFormProps) {
+export default function ContactForm({ packages, contact, logo, logoText, heroImage, campaignBannerImage }: ContactFormProps) {
   const [showPopup, setShowPopup] = useState(false);
   const [popupSuccess, setPopupSuccess] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -317,12 +318,20 @@ export default function ContactForm({ packages, contact, logo, logoText, heroIma
 
       {/* DİĞER KAMPANYALAR */}
       {packages.length > 1 && (
-        <section style={{ background: "linear-gradient(135deg, #3b1a6e 0%, #8d1d82 100%)", padding: "40px 20px", textAlign: "center" }}>
-          <h2 style={{ color: "#fff", fontSize: "22px", fontWeight: 900, margin: "0 0 10px" }}>Avantajlarla Dolu Diğer Kampanyalar</h2>
-          <p style={{ color: "rgba(255,255,255,0.8)", fontSize: "14px", maxWidth: "560px", margin: "0 auto", lineHeight: 1.7 }}>
-            İzlemek istediğiniz paketi seçin, aynı gün kurulumunuzu yapalım.
-            {phoneDisplay && ` ${phoneDisplay} numaralı hattımızdan canlı destek alabilirsiniz.`}
-          </p>
+        <section style={{ position: "relative", padding: "40px 20px", textAlign: "center", overflow: "hidden", background: campaignBannerImage ? "transparent" : "linear-gradient(135deg, #3b1a6e 0%, #8d1d82 100%)" }}>
+          {campaignBannerImage && (
+            <>
+              <img src={campaignBannerImage} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+              <div style={{ position: "absolute", inset: 0, background: "rgba(26,20,64,0.6)" }} />
+            </>
+          )}
+          <div style={{ position: "relative", zIndex: 1 }}>
+            <h2 style={{ color: "#fff", fontSize: "22px", fontWeight: 900, margin: "0 0 10px" }}>Avantajlarla Dolu Diğer Kampanyalar</h2>
+            <p style={{ color: "rgba(255,255,255,0.8)", fontSize: "14px", maxWidth: "560px", margin: "0 auto", lineHeight: 1.7 }}>
+              İzlemek istediğiniz paketi seçin, aynı gün kurulumunuzu yapalım.
+              {phoneDisplay && ` ${phoneDisplay} numaralı hattımızdan canlı destek alabilirsiniz.`}
+            </p>
+          </div>
         </section>
       )}
 

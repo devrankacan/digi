@@ -82,6 +82,10 @@ export default function AdminPage() {
   const heroFileRef = useRef<HTMLInputElement>(null);
   const [heroUploading, setHeroUploading] = useState(false);
   const [heroFileName, setHeroFileName] = useState("");
+  const [campaignBannerImage, setCampaignBannerImage] = useState<string | null>(null);
+  const campaignBannerRef = useRef<HTMLInputElement>(null);
+  const [campaignBannerUploading, setCampaignBannerUploading] = useState(false);
+  const [campaignBannerFileName, setCampaignBannerFileName] = useState("");
   const [faviconUrl, setFaviconUrl] = useState<string | null>(null);
   const faviconRef = useRef<HTMLInputElement>(null);
   const [faviconUploading, setFaviconUploading] = useState(false);
@@ -114,6 +118,7 @@ export default function AdminPage() {
       setAbout(data.about);
       setContactPage(data.contactPage);
       setHeroImage((data as unknown as Record<string, unknown>).heroImage as string | null);
+      setCampaignBannerImage((data as unknown as Record<string, unknown>).campaignBannerImage as string | null);
       setFaviconUrl((data as unknown as Record<string, unknown>).faviconUrl as string | null);
     } finally {
       setLoading(false);
@@ -294,6 +299,29 @@ export default function AdminPage() {
     XLSX.utils.book_append_sheet(wb, ws, "Başvurular");
     const fileName = `dijiturkaboneleri_${new Date().toISOString().slice(0, 10)}.xlsx`;
     XLSX.writeFile(wb, fileName);
+  }
+
+  async function handleCampaignBannerUpload() {
+    const file = campaignBannerRef.current?.files?.[0];
+    if (!file) { showSaveMsg("Lütfen önce bir dosya seçin."); return; }
+    setCampaignBannerUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      fd.append("type", "campaign-banner");
+      const res = await fetch("/api/admin/upload", { method: "POST", headers: AUTH_HEADER, body: fd });
+      if (res.ok) {
+        setCampaignBannerFileName("");
+        if (campaignBannerRef.current) campaignBannerRef.current.value = "";
+        await fetchSettings();
+        showSaveMsg("Banner görseli yüklendi!");
+      } else {
+        showSaveMsg("Yükleme hatası.");
+      }
+    } catch (e) {
+      showSaveMsg(`Bağlantı hatası: ${String(e).slice(0, 80)}`);
+    }
+    setCampaignBannerUploading(false);
   }
 
   async function handlePackageImageUpload(idx: number, file: File) {
@@ -526,6 +554,38 @@ export default function AdminPage() {
                   }}
                   className="text-red-500 font-bold px-3 py-2 rounded-xl text-sm border border-red-300 hover:bg-red-50 whitespace-nowrap"
                 >
+                  Sil
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Kampanya Banner Görseli */}
+          <div className="bg-white rounded-2xl shadow p-6">
+            <h2 className="text-lg font-black mb-1" style={{ color: "#5c1294" }}>Kampanya Banner Görseli</h2>
+            <p className="text-xs text-gray-400 mb-4">Paketlerin altındaki "Avantajlarla Dolu Diğer Kampanyalar" bölümünün arka planı.</p>
+            {campaignBannerImage && (
+              <img src={campaignBannerImage} alt="Banner" className="w-full max-h-40 object-cover rounded-xl mb-4 border border-gray-200" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+            )}
+            <div className="flex items-center gap-2">
+              <label className="flex-1 cursor-pointer">
+                <div className="border border-gray-300 rounded-xl px-3 py-2 text-sm text-gray-500 bg-gray-50 hover:bg-gray-100 transition-colors truncate">
+                  {campaignBannerFileName || "Görsel seçin (PNG, JPG)"}
+                </div>
+                <input type="file" accept="image/*" ref={campaignBannerRef} className="hidden" onChange={(e) => setCampaignBannerFileName(e.target.files?.[0]?.name || "")} />
+              </label>
+              <button onClick={handleCampaignBannerUpload} disabled={campaignBannerUploading} className="text-white font-bold px-4 py-2 rounded-xl text-sm disabled:opacity-50 whitespace-nowrap" style={{ background: "#5c1294" }}>
+                {campaignBannerUploading ? "Yükleniyor..." : "Görsel Yükle"}
+              </button>
+              {campaignBannerImage && (
+                <button onClick={async () => {
+                  if (!settings) return;
+                  const updated = { ...settings };
+                  (updated as Record<string, unknown>).campaignBannerImage = null;
+                  await fetch("/api/admin/settings", { method: "POST", headers: { ...AUTH_HEADER, "Content-Type": "application/json" }, body: JSON.stringify(updated) });
+                  setCampaignBannerImage(null);
+                  showSaveMsg("Banner görseli silindi.");
+                }} className="text-red-500 font-bold px-3 py-2 rounded-xl text-sm border border-red-300 hover:bg-red-50 whitespace-nowrap">
                   Sil
                 </button>
               )}

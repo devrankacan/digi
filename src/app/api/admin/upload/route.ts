@@ -36,6 +36,8 @@ export async function POST(req: NextRequest) {
   const settings = getSettings();
   if (type === "hero") {
     (settings as Record<string, unknown>).heroImage = url;
+  } else if (type === "campaign-banner") {
+    (settings as Record<string, unknown>).campaignBannerImage = urlClean;
   } else if (type === "favicon") {
     (settings as Record<string, unknown>).faviconUrl = urlClean;
   } else if (type.startsWith("package-image-")) {
