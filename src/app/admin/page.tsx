@@ -55,7 +55,7 @@ interface Settings {
 }
 
 const AUTH_HEADER = { Authorization: "Bearer dijiturkadmin" };
-const ADMIN_PASSWORD = "jyi g";
+const ADMIN_PASSWORD = "digiturkadmin2026";
 const STORAGE_KEY = "adminAuth";
 
 export default function AdminPage() {
