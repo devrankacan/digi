@@ -375,12 +375,6 @@ export default function AdminPage() {
             <div className="bg-white rounded-2xl shadow p-6">
               <h2 className="text-lg font-black mb-1" style={{ color: "#5c1294" }}>Favicon</h2>
               <p className="text-xs text-gray-400 mb-4">Tarayıcı sekmesinde görünen küçük ikon.</p>
-              {faviconUrl && (
-                <div className="flex items-center gap-3 mb-4">
-                  <img src={`${faviconUrl}?t=${Date.now()}`} alt="Favicon" className="w-10 h-10 object-contain border border-gray-200 rounded-lg p-1" />
-                  <span className="text-sm text-gray-500">Mevcut favicon</span>
-                </div>
-              )}
               <div className="flex items-center gap-2">
                 <label className="flex-1 cursor-pointer">
                   <div className="border border-gray-300 rounded-xl px-3 py-2 text-sm text-gray-500 bg-gray-50 hover:bg-gray-100 transition-colors truncate">
