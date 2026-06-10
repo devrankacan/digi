@@ -492,6 +492,18 @@ export default function AdminPage() {
               >
                 {heroUploading ? "Yükleniyor..." : "Görsel Yükle"}
               </button>
+              {heroImage && (
+                <button
+                  onClick={async () => {
+                    await fetch("/api/admin/delete-hero", { method: "POST", headers: AUTH_HEADER });
+                    await fetchSettings();
+                    showSaveMsg("Görsel silindi.");
+                  }}
+                  className="text-red-500 font-bold px-3 py-2 rounded-xl text-sm border border-red-300 hover:bg-red-50 whitespace-nowrap"
+                >
+                  Sil
+                </button>
+              )}
             </div>
           </div>
 
