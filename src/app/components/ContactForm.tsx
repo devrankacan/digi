@@ -108,10 +108,19 @@ function BaşvuruFormu({ packages, onSuccess }: { packages: Package[]; onSuccess
   );
 }
 
+const navLinks = [
+  { href: "/", label: "Ana Sayfa" },
+  { href: "/sporun-yildizi", label: "Sporun Yıldızı" },
+  { href: "/internet-sporun-yildizi", label: "İnternet+Sporun Yıldızı" },
+  { href: "/hakkimizda", label: "Hakkımızda" },
+  { href: "/iletisim", label: "İletişim" },
+];
+
 export default function ContactForm({ packages, contact, logo, logoText, heroImage }: ContactFormProps) {
   const [showPopup, setShowPopup] = useState(false);
   const [formSuccess, setFormSuccess] = useState(false);
   const [popupSuccess, setPopupSuccess] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const phoneDisplay = contact.phone || contact.whatsappDisplay || "";
 
@@ -124,6 +133,10 @@ export default function ContactForm({ packages, contact, logo, logoText, heroIma
         @media (min-width: 768px) { .top-bar { display: flex !important; } }
         .desktop-nav { display: none !important; }
         @media (min-width: 900px) { .desktop-nav { display: flex !important; } }
+        .mobile-hamburger { display: flex !important; }
+        @media (min-width: 900px) { .mobile-hamburger { display: none !important; } }
+        .basvuru-pill-mobile { padding: 7px 14px !important; font-size: 12px !important; }
+        @media (min-width: 900px) { .basvuru-pill-mobile { padding: 9px 24px !important; font-size: 14px !important; } }
         .two-col { flex-direction: column; }
         @media (min-width: 900px) { .two-col { flex-direction: row !important; } }
         .form-col-width { width: 100%; }
@@ -134,7 +147,7 @@ export default function ContactForm({ packages, contact, logo, logoText, heroIma
         }
         .basvuru-btn:hover { background: ${C.accentHover}; }
         .pkg-star::before { content: "★"; color: #c084fc; margin-right: 8px; }
-        .nav-a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 14px; font-weight: 600; }
+        .nav-a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 13px; font-weight: 600; }
         .nav-a:hover { color: #fff; }
       `}</style>
 
@@ -179,31 +192,25 @@ export default function ContactForm({ packages, contact, logo, logoText, heroIma
                 : <span style={{ fontSize: "28px", fontWeight: 900, fontStyle: "italic", color: "#e41738", fontFamily: "'Arial Black', Impact, sans-serif", letterSpacing: "-1px" }}>{logoText}</span>}
             </a>
 
-            {/* Nav */}
+            {/* Nav (desktop) */}
             <nav className="desktop-nav" style={{ gap: "18px", alignItems: "center", flex: 1 }}>
-              <a href="/" className="nav-a" style={{ fontSize: "13px" }}>Ana Sayfa</a>
-              <a href="/hakkimizda" className="nav-a" style={{ fontSize: "13px" }}>Hakkımızda</a>
-              <a href="/iletisim" className="nav-a" style={{ fontSize: "13px" }}>İletişim</a>
+              {navLinks.map(l => <a key={l.href} href={l.href} className="nav-a">{l.label}</a>)}
             </nav>
 
-            {/* Başvuru Yap - tam oval (pill) buton */}
-            <button onClick={() => setShowPopup(true)}
-              style={{
-                background: "#c026d3",
-                color: "#fff",
-                border: "2px solid rgba(255,255,255,0.5)",
-                padding: "9px 24px",
-                borderRadius: "9999px",
-                fontWeight: 700,
-                fontSize: "14px",
-                cursor: "pointer",
-                whiteSpace: "nowrap",
-                flexShrink: 0,
-                boxShadow: "0 2px 10px rgba(0,0,0,0.3)",
-              }}
+            {/* Başvuru Yap */}
+            <button onClick={() => setShowPopup(true)} className="basvuru-pill-mobile"
+              style={{ background: "#c026d3", color: "#fff", border: "2px solid rgba(255,255,255,0.5)", padding: "9px 24px", borderRadius: "9999px", fontWeight: 700, fontSize: "14px", cursor: "pointer", whiteSpace: "nowrap", flexShrink: 0, boxShadow: "0 2px 10px rgba(0,0,0,0.3)" }}
               onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = "#a21caf"; }}
               onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = "#c026d3"; }}>
               Başvuru Yap
+            </button>
+
+            {/* Hamburger (mobile) */}
+            <button className="mobile-hamburger" onClick={() => setDrawerOpen(true)}
+              style={{ background: "rgba(255,255,255,0.15)", border: "none", borderRadius: "8px", padding: "8px", cursor: "pointer", flexShrink: 0, flexDirection: "column", gap: "5px", alignItems: "center", justifyContent: "center", width: "40px", height: "40px" }}>
+              <span style={{ display: "block", width: "20px", height: "2px", background: "#fff", borderRadius: "2px" }} />
+              <span style={{ display: "block", width: "20px", height: "2px", background: "#fff", borderRadius: "2px" }} />
+              <span style={{ display: "block", width: "20px", height: "2px", background: "#fff", borderRadius: "2px" }} />
             </button>
           </div>
         </div>
@@ -374,11 +381,7 @@ export default function ContactForm({ packages, contact, logo, logoText, heroIma
           <div style={{ flex: "1 1 160px" }}>
             <h4 style={{ color: "#fff", fontSize: "13px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "1px", marginBottom: "16px" }}>Sayfalar</h4>
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-              {[
-                { href: "/", label: "Ana Sayfa" },
-                { href: "/hakkimizda", label: "Hakkımızda" },
-                { href: "/iletisim", label: "İletişim" },
-              ].map(l => (
+              {navLinks.map(l => (
                 <a key={l.href} href={l.href} style={{ color: "rgba(255,255,255,0.6)", fontSize: "14px", textDecoration: "none", transition: "color 0.2s" }}
                   onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
                   onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}>
@@ -444,6 +447,32 @@ export default function ContactForm({ packages, contact, logo, logoText, heroIma
           </div>
         </div>
       </footer>
+
+      {/* MOBİL DRAWER */}
+      {drawerOpen && (
+        <div style={{ position: "fixed", inset: 0, zIndex: 9998 }} onClick={() => setDrawerOpen(false)}>
+          <div style={{ position: "absolute", top: 0, right: 0, width: "280px", height: "100%", background: "#1e1252", boxShadow: "-4px 0 24px rgba(0,0,0,0.5)", display: "flex", flexDirection: "column", padding: "24px" }}
+            onClick={e => e.stopPropagation()}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "32px" }}>
+              <span style={{ fontSize: "16px", fontWeight: 700, color: "#fff" }}>Menü</span>
+              <button onClick={() => setDrawerOpen(false)} style={{ background: "none", border: "none", fontSize: "24px", cursor: "pointer", color: "rgba(255,255,255,0.6)", lineHeight: 1 }}>×</button>
+            </div>
+            <nav style={{ display: "flex", flexDirection: "column", gap: "4px", flex: 1 }}>
+              {navLinks.map(l => (
+                <a key={l.href} href={l.href} style={{ color: "rgba(255,255,255,0.85)", textDecoration: "none", fontSize: "15px", fontWeight: 600, padding: "12px 16px", borderRadius: "8px", display: "block" }}
+                  onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.08)")}
+                  onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>
+                  {l.label}
+                </a>
+              ))}
+            </nav>
+            <button onClick={() => { setDrawerOpen(false); setShowPopup(true); }}
+              style={{ background: "#c026d3", color: "#fff", border: "none", padding: "13px", borderRadius: "9999px", fontWeight: 700, fontSize: "15px", cursor: "pointer", marginTop: "16px" }}>
+              Başvuru Yap
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* POPUP FORM */}
       {showPopup && (
