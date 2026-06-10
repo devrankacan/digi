@@ -216,9 +216,9 @@ export default function PackagePage({ pkg, allPackages, contact, logo, logoText 
                   <BaşvuruFormu packages={allPackages} onSuccess={() => setFormSuccess(true)} />
                 )}
                 {phoneDisplay && (
-                  <div style={{ marginTop: "12px", background: "rgba(141,29,130,0.25)", borderRadius: "4px", padding: "11px", textAlign: "center", fontWeight: 700, color: "#fff", fontSize: "15px", border: "1px solid rgba(141,29,130,0.5)" }}>
+                  <a href={`tel:${phoneDisplay.replace(/\s/g, "")}`} style={{ display: "block", marginTop: "12px", background: "rgba(141,29,130,0.25)", borderRadius: "4px", padding: "11px", textAlign: "center", fontWeight: 700, color: "#fff", fontSize: "15px", border: "1px solid rgba(141,29,130,0.5)", textDecoration: "none", cursor: "pointer" }}>
                     HEMEN ARA : {phoneDisplay}
-                  </div>
+                  </a>
                 )}
               </div>
             </div>
