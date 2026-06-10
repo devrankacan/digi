@@ -170,9 +170,9 @@ export default function ContactForm({ packages, contact, logo, logoText, heroIma
             <a href="/iletisim" className="nav-a">İletişim</a>
           </nav>
           <button onClick={() => setShowPopup(true)}
-            style={{ background: "transparent", color: "#fff", border: "none", padding: "8px 4px", fontWeight: 700, fontSize: "14px", cursor: "pointer", whiteSpace: "nowrap", flexShrink: 0 }}
-            onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.opacity = "0.75"; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.opacity = "1"; }}>
+            style={{ background: "transparent", color: "#fff", border: "2px solid rgba(255,255,255,0.8)", padding: "8px 22px", borderRadius: "6px", fontWeight: 700, fontSize: "14px", cursor: "pointer", whiteSpace: "nowrap", flexShrink: 0, display: "inline-block", width: "auto" }}
+            onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.15)"; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}>
             Başvuru Yap
           </button>
         </div>
