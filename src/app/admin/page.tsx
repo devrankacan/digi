@@ -303,8 +303,18 @@ export default function AdminPage() {
     const res = await fetch("/api/admin/upload", { method: "POST", headers: AUTH_HEADER, body: fd });
     if (res.ok) {
       const data = await res.json();
-      setPackages(prev => prev.map((p, i) => i === idx ? { ...p, image: data.url } : p));
-      showSaveMsg("Paket görseli yüklendi! Kaydetmeyi unutmayın.");
+      const updatedPackages = packages.map((p, i) => i === idx ? { ...p, image: data.url } : p);
+      setPackages(updatedPackages);
+      if (settings) {
+        const updated = { ...settings, logoText, packages: updatedPackages };
+        await fetch("/api/admin/settings", {
+          method: "POST",
+          headers: { ...AUTH_HEADER, "Content-Type": "application/json" },
+          body: JSON.stringify(updated),
+        });
+        setSettings(updated);
+      }
+      showSaveMsg("Paket görseli yüklendi ve kaydedildi!");
     } else {
       showSaveMsg("Görsel yüklenemedi.");
     }
