@@ -229,28 +229,32 @@ export default function AdminPage() {
 
   async function handleHeroUpload() {
     const file = heroFileRef.current?.files?.[0];
-    if (!file) return;
+    if (!file) { showSaveMsg("Lütfen önce bir dosya seçin."); return; }
     setHeroUploading(true);
-    const fd = new FormData();
-    fd.append("file", file);
-    fd.append("type", "hero");
-    const res = await fetch("/api/admin/upload", {
-      method: "POST",
-      headers: AUTH_HEADER,
-      body: fd,
-    });
-    if (res.ok) {
-      const data = await res.json();
-      setHeroImage(`${data.url}?t=${Date.now()}`);
-      setHeroFileName("");
-      showSaveMsg("Kampanya görseli yüklendi!");
-    } else {
-      const err = await res.text();
-      showSaveMsg(`Hata: ${res.status} - ${err.slice(0, 80)}`);
+    showSaveMsg("Yükleniyor...");
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      fd.append("type", "hero");
+      const res = await fetch("/api/admin/upload", {
+        method: "POST",
+        headers: AUTH_HEADER,
+        body: fd,
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setHeroImage(`${data.url}?t=${Date.now()}`);
+        setHeroFileName("");
+        showSaveMsg("Kampanya görseli yüklendi!");
+      } else {
+        const err = await res.text();
+        showSaveMsg(`Hata: ${res.status} - ${err.slice(0, 100)}`);
+      }
+    } catch (e) {
+      showSaveMsg(`Bağlantı hatası: ${String(e).slice(0, 80)}`);
     }
     setHeroUploading(false);
     if (heroFileRef.current) heroFileRef.current.value = "";
-    setHeroFileName("");
   }
 
   function downloadExcel() {
