@@ -353,21 +353,95 @@ export default function ContactForm({ packages, contact, logo, logoText, heroIma
       )}
 
       {/* FOOTER */}
-      <footer style={{ background: "linear-gradient(135deg, #1a1440 0%, #3b1a6e 100%)", padding: "24px 20px" }}>
-        <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", flexWrap: "wrap", gap: "20px", alignItems: "center", justifyContent: "space-between" }}>
-          <a href="/" style={{ textDecoration: "none" }}>
-            {logo
-              ? <img src={logo} alt={logoText} style={{ maxHeight: "44px", objectFit: "contain", filter: "brightness(0) invert(1)" }} />
-              : <span style={{ fontSize: "22px", fontWeight: 900, fontStyle: "italic", color: "#fff", fontFamily: "'Arial Black', Impact, sans-serif" }}>{logoText}</span>}
-          </a>
-          <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
-            <a href="/" style={{ color: "rgba(255,255,255,0.75)", fontSize: "14px", textDecoration: "none" }}>Ana Sayfa</a>
-            <a href="/hakkimizda" style={{ color: "rgba(255,255,255,0.75)", fontSize: "14px", textDecoration: "none" }}>Hakkımızda</a>
-            <a href="/iletisim" style={{ color: "rgba(255,255,255,0.75)", fontSize: "14px", textDecoration: "none" }}>İletişim</a>
+      <footer style={{ background: "#0d0b2e", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+
+        {/* Üst kısım */}
+        <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "48px 24px 32px", display: "flex", flexWrap: "wrap", gap: "40px", justifyContent: "space-between" }}>
+
+          {/* Logo + açıklama */}
+          <div style={{ flex: "1 1 240px", maxWidth: "300px" }}>
+            <a href="/" style={{ textDecoration: "none", display: "inline-block", marginBottom: "16px" }}>
+              {logo
+                ? <img src={logo} alt={logoText} style={{ maxHeight: "48px", objectFit: "contain", filter: "brightness(0) invert(1)" }} />
+                : <span style={{ fontSize: "26px", fontWeight: 900, fontStyle: "italic", color: "#fff", fontFamily: "'Arial Black', Impact, sans-serif" }}>{logoText}</span>}
+            </a>
+            <p style={{ color: "rgba(255,255,255,0.45)", fontSize: "13px", lineHeight: 1.7, margin: 0 }}>
+              Dijitürk yetkili satış ortağı olarak en güncel kampanya ve paketleri sizinle buluşturuyoruz.
+            </p>
           </div>
-          <p style={{ color: "rgba(255,255,255,0.45)", fontSize: "12px", margin: 0 }}>
-            {contact.footerText || `© 2026 ${logoText} — Tüm hakları saklıdır.`}
-          </p>
+
+          {/* Hızlı bağlantılar */}
+          <div style={{ flex: "1 1 160px" }}>
+            <h4 style={{ color: "#fff", fontSize: "13px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "1px", marginBottom: "16px" }}>Sayfalar</h4>
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              {[
+                { href: "/", label: "Ana Sayfa" },
+                { href: "/hakkimizda", label: "Hakkımızda" },
+                { href: "/iletisim", label: "İletişim" },
+              ].map(l => (
+                <a key={l.href} href={l.href} style={{ color: "rgba(255,255,255,0.6)", fontSize: "14px", textDecoration: "none", transition: "color 0.2s" }}
+                  onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
+                  onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}>
+                  {l.label}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Yasal */}
+          <div style={{ flex: "1 1 160px" }}>
+            <h4 style={{ color: "#fff", fontSize: "13px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "1px", marginBottom: "16px" }}>Yasal</h4>
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              {[
+                { href: "/aydinlatma-metni", label: "Aydınlatma Metni" },
+                { href: "/gizlilik-politikasi", label: "Gizlilik Politikası" },
+                { href: "/kvkk", label: "KVKK" },
+              ].map(l => (
+                <a key={l.href} href={l.href} style={{ color: "rgba(255,255,255,0.6)", fontSize: "14px", textDecoration: "none" }}
+                  onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
+                  onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}>
+                  {l.label}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* İletişim */}
+          <div style={{ flex: "1 1 200px" }}>
+            <h4 style={{ color: "#fff", fontSize: "13px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "1px", marginBottom: "16px" }}>İletişim</h4>
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              {contact.email && (
+                <a href={`mailto:${contact.email}`} style={{ color: "rgba(255,255,255,0.6)", fontSize: "13px", textDecoration: "none", display: "flex", alignItems: "center", gap: "8px" }}>
+                  <span style={{ fontSize: "15px" }}>✉</span> {contact.email}
+                </a>
+              )}
+              {phoneDisplay && (
+                <a href={`tel:${phoneDisplay}`} style={{ color: "rgba(255,255,255,0.6)", fontSize: "13px", textDecoration: "none", display: "flex", alignItems: "center", gap: "8px" }}>
+                  <span style={{ fontSize: "15px" }}>📞</span> {phoneDisplay}
+                </a>
+              )}
+              {contact.whatsapp && (
+                <a href={`https://wa.me/${contact.whatsapp}`} target="_blank" rel="noopener noreferrer"
+                  style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "#25d366", color: "#fff", fontSize: "13px", fontWeight: 700, padding: "8px 16px", borderRadius: "9999px", textDecoration: "none", marginTop: "4px", width: "fit-content" }}>
+                  <svg width="16" height="16" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.532 5.858L.054 23.617a.5.5 0 0 0 .609.61l5.88-1.485A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.2-1.378l-.373-.213-3.865.977.997-3.76-.232-.388A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+                  WhatsApp
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Alt çizgi */}
+        <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", padding: "18px 24px" }}>
+          <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", flexWrap: "wrap", gap: "12px", alignItems: "center", justifyContent: "space-between" }}>
+            <p style={{ color: "rgba(255,255,255,0.35)", fontSize: "12px", margin: 0 }}>
+              © 2026 {logoText} — Tüm hakları saklıdır. Dijitürk yetkili satış ortağıdır.
+            </p>
+            <div style={{ display: "flex", gap: "16px" }}>
+              <a href="/aydinlatma-metni" style={{ color: "rgba(255,255,255,0.35)", fontSize: "12px", textDecoration: "none" }}>Aydınlatma Metni</a>
+              <a href="/kvkk" style={{ color: "rgba(255,255,255,0.35)", fontSize: "12px", textDecoration: "none" }}>KVKK</a>
+            </div>
+          </div>
         </div>
       </footer>
 
