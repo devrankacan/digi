@@ -159,8 +159,8 @@ export default function ContactForm({ packages, contact, logo, logoText, heroIma
           <span>Dijitürk Resmi Satış Ortağıdır</span>
         </div>
 
-        {/* YÜZEN ANA MENÜ ÇUBUĞU */}
-        <div style={{ maxWidth: "1160px", margin: "0 auto", padding: "10px 16px 14px" }}>
+        {/* YÜZEN ANA MENÜ ÇUBUĞU - yarısı dışarı taşar */}
+        <div style={{ maxWidth: "1160px", margin: "0 auto", padding: "8px 16px 0", transform: "translateY(50%)" }}>
           <div style={{
             background: "linear-gradient(90deg, #3b0764 0%, #6b21a8 40%, #a21caf 75%, #c026d3 100%)",
             borderRadius: "16px",
