@@ -34,6 +34,8 @@ export async function POST(req: NextRequest) {
   const settings = getSettings();
   if (type === "hero") {
     (settings as Record<string, unknown>).heroImage = url;
+  } else if (type === "favicon") {
+    (settings as Record<string, unknown>).faviconUrl = url;
   } else {
     settings.logo = url;
   }

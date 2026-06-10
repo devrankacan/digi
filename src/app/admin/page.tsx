@@ -81,6 +81,10 @@ export default function AdminPage() {
   const heroFileRef = useRef<HTMLInputElement>(null);
   const [heroUploading, setHeroUploading] = useState(false);
   const [heroFileName, setHeroFileName] = useState("");
+  const [faviconUrl, setFaviconUrl] = useState<string | null>(null);
+  const faviconRef = useRef<HTMLInputElement>(null);
+  const [faviconUploading, setFaviconUploading] = useState(false);
+  const [faviconUploaded, setFaviconUploaded] = useState(false);
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [subLoading, setSubLoading] = useState(false);
   const [selectedFileName, setSelectedFileName] = useState("");
@@ -108,6 +112,7 @@ export default function AdminPage() {
       setAbout(data.about);
       setContactPage(data.contactPage);
       setHeroImage((data as unknown as Record<string, unknown>).heroImage as string | null);
+      setFaviconUrl((data as unknown as Record<string, unknown>).faviconUrl as string | null);
     } finally {
       setLoading(false);
     }
@@ -199,6 +204,26 @@ export default function AdminPage() {
     setUploading(false);
     if (fileRef.current) fileRef.current.value = "";
     setSelectedFileName("");
+  }
+
+  async function handleFaviconUpload() {
+    const file = faviconRef.current?.files?.[0];
+    if (!file) return;
+    setFaviconUploading(true);
+    const fd = new FormData();
+    fd.append("file", file);
+    fd.append("type", "favicon");
+    const res = await fetch("/api/admin/upload", { method: "POST", headers: AUTH_HEADER, body: fd });
+    if (res.ok) {
+      const data = await res.json();
+      setFaviconUrl(data.url);
+      setFaviconUploaded(true);
+      showSaveMsg("Favicon yüklendi!");
+    } else {
+      showSaveMsg("Favicon yüklenemedi.");
+    }
+    setFaviconUploading(false);
+    if (faviconRef.current) faviconRef.current.value = "";
   }
 
   async function handleHeroUpload() {
@@ -341,6 +366,30 @@ export default function AdminPage() {
           {saveMsg && (
             <div className="bg-green-500 text-white text-center font-bold py-2 px-4 rounded-xl shadow">
               {saveMsg}
+            </div>
+          )}
+
+          {/* Favicon Section */}
+          {!faviconUploaded && !faviconUrl && (
+            <div className="bg-white rounded-2xl shadow p-6">
+              <h2 className="text-lg font-black mb-1" style={{ color: "#5c1294" }}>Favicon</h2>
+              <p className="text-xs text-gray-400 mb-4">Tarayıcı sekmesinde görünen küçük ikon (PNG, ICO, SVG).</p>
+              <div className="flex items-center gap-2">
+                <label className="flex-1 cursor-pointer">
+                  <div className="border border-gray-300 rounded-xl px-3 py-2 text-sm text-gray-500 bg-gray-50 hover:bg-gray-100 transition-colors truncate">
+                    İkon dosyası seçin (PNG, ICO, SVG)
+                  </div>
+                  <input type="file" accept="image/png,image/x-icon,image/svg+xml,image/ico" ref={faviconRef} className="hidden" />
+                </label>
+                <button
+                  onClick={handleFaviconUpload}
+                  disabled={faviconUploading}
+                  className="text-white font-bold px-4 py-2 rounded-xl text-sm disabled:opacity-50 whitespace-nowrap"
+                  style={{ background: "#5c1294" }}
+                >
+                  {faviconUploading ? "Yükleniyor..." : "Yükle"}
+                </button>
+              </div>
             </div>
           )}
 
