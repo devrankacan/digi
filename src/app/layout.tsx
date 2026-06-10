@@ -9,8 +9,8 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: "digitürk — Kampanya Başvurusu",
-  description: "İlk 3 ay %50 indirimli digitürk paketleri için hemen başvurun.",
+  title: "Digitürk — Kampanya Başvurusu",
+  description: "İlk 3 ay %50 indirimli Digitürk paketleri için hemen başvurun.",
 };
 
 export default function RootLayout({
