@@ -368,7 +368,7 @@ export default function ContactForm({ packages, contact, logo, logoText, heroIma
                 : <span style={{ fontSize: "26px", fontWeight: 900, fontStyle: "italic", color: "#fff", fontFamily: "'Arial Black', Impact, sans-serif" }}>{logoText}</span>}
             </a>
             <p style={{ color: "rgba(255,255,255,0.45)", fontSize: "13px", lineHeight: 1.7, margin: 0 }}>
-              Dijitürk yetkili satış ortağı olarak en güncel kampanya ve paketleri sizinle buluşturuyoruz.
+              Digitürk yetkili satış ortağı olarak en güncel kampanya ve paketleri sizinle buluşturuyoruz.
             </p>
           </div>
 
@@ -433,7 +433,7 @@ export default function ContactForm({ packages, contact, logo, logoText, heroIma
         <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", padding: "18px 24px" }}>
           <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", flexWrap: "wrap", gap: "12px", alignItems: "center", justifyContent: "space-between" }}>
             <p style={{ color: "rgba(255,255,255,0.35)", fontSize: "12px", margin: 0 }}>
-              © 2026 {logoText} — Tüm hakları saklıdır. Dijitürk yetkili satış ortağıdır.
+              © 2026 {logoText} — Tüm hakları saklıdır. Digitürk yetkili satış ortağıdır.
             </p>
             <div style={{ display: "flex", gap: "16px" }}>
               <a href="/aydinlatma-metni" style={{ color: "rgba(255,255,255,0.35)", fontSize: "12px", textDecoration: "none" }}>Aydınlatma Metni</a>
