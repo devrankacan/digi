@@ -18,6 +18,8 @@ export default function GizlilikPolitikasiPage() {
             </Link>
             <nav className="desktop-nav" style={{ gap: "18px", alignItems: "center", flex: 1 }}>
               <Link href="/" className="nav-a">Ana Sayfa</Link>
+              <Link href="/sporun-yildizi" className="nav-a">Sporun Yıldızı</Link>
+              <Link href="/internet-sporun-yildizi" className="nav-a">İnternet+Sporun Yıldızı</Link>
               <Link href="/hakkimizda" className="nav-a">Hakkımızda</Link>
               <Link href="/iletisim" className="nav-a">İletişim</Link>
             </nav>
