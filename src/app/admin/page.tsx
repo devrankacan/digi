@@ -195,15 +195,14 @@ export default function AdminPage() {
       body: fd,
     });
     if (res.ok) {
-      const data = await res.json();
-      const logoWithBust = `${data.logo}?t=${Date.now()}`;
-      setSettings((prev) => prev ? { ...prev, logo: logoWithBust } : prev);
+      if (fileRef.current) fileRef.current.value = "";
+      setSelectedFileName("");
+      await fetchSettings();
       showSaveMsg("Logo yüklendi!");
     } else {
       showSaveMsg("Logo yüklenemedi.");
     }
     setUploading(false);
-    if (fileRef.current) fileRef.current.value = "";
     setSelectedFileName("");
   }
 
@@ -241,10 +240,9 @@ export default function AdminPage() {
         body: fd,
       });
       if (res.ok) {
-        const ts = Date.now();
-        setHeroImage(null);
-        setTimeout(() => setHeroImage(`/uploads/hero.png?t=${ts}`), 50);
         setHeroFileName("");
+        if (heroFileRef.current) heroFileRef.current.value = "";
+        await fetchSettings();
         showSaveMsg("Kampanya görseli yüklendi!");
       } else {
         const err = await res.text();
@@ -254,7 +252,6 @@ export default function AdminPage() {
       showSaveMsg(`Bağlantı hatası: ${String(e).slice(0, 80)}`);
     }
     setHeroUploading(false);
-    if (heroFileRef.current) heroFileRef.current.value = "";
   }
 
   function downloadExcel() {
