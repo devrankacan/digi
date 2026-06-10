@@ -371,10 +371,16 @@ export default function AdminPage() {
           )}
 
           {/* Favicon Section */}
-          {!faviconUploaded && (
-            <div className="bg-white rounded-2xl shadow p-6">
-              <h2 className="text-lg font-black mb-1" style={{ color: "#5c1294" }}>Favicon</h2>
-              <p className="text-xs text-gray-400 mb-4">Tarayıcı sekmesinde görünen küçük ikon.</p>
+          <div className="bg-white rounded-2xl shadow p-6">
+            <h2 className="text-lg font-black mb-1" style={{ color: "#5c1294" }}>Favicon</h2>
+            <p className="text-xs text-gray-400 mb-4">Tarayıcı sekmesinde görünen küçük ikon.</p>
+            {faviconUploaded ? (
+              <div className="flex items-center gap-3">
+                <img src={`/uploads/favicon.png?t=${Date.now()}`} alt="Favicon" className="w-10 h-10 object-contain border border-gray-200 rounded-lg p-1" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                <span className="text-green-600 text-sm font-semibold">✓ Favicon yüklendi</span>
+                <button onClick={() => setFaviconUploaded(false)} className="text-purple-600 text-xs underline ml-auto">Değiştir</button>
+              </div>
+            ) : (
               <div className="flex items-center gap-2">
                 <label className="flex-1 cursor-pointer">
                   <div className="border border-gray-300 rounded-xl px-3 py-2 text-sm text-gray-500 bg-gray-50 hover:bg-gray-100 transition-colors truncate">
@@ -391,8 +397,8 @@ export default function AdminPage() {
                   {faviconUploading ? "Yükleniyor..." : "Yükle"}
                 </button>
               </div>
-            </div>
-          )}
+            )}
+          </div>
 
           {/* Logo Section */}
           <div className="bg-white rounded-2xl shadow p-6">
