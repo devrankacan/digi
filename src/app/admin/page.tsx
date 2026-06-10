@@ -579,6 +579,34 @@ export default function AdminPage() {
             </div>
           </div>
 
+          {/* Notification Email Section */}
+          <div className="bg-white rounded-2xl shadow p-6">
+            <h2 className="text-lg font-black mb-1" style={{ color: "#5c1294" }}>Bildirim E-postası</h2>
+            <p className="text-xs text-gray-400 mb-4">Yeni başvurular bu adrese gönderilir.</p>
+            <input
+              type="email"
+              value={(settings as unknown as Record<string, unknown>)?.notificationEmail as string || ""}
+              onChange={(e) => setSettings((prev) => prev ? { ...prev, notificationEmail: e.target.value } as typeof prev : prev)}
+              placeholder="ornek@firma.com"
+              className="w-full border border-gray-300 rounded-xl px-4 py-2 text-sm text-gray-900 focus:outline-none focus:border-purple-500 mb-3"
+            />
+            <button
+              onClick={async () => {
+                if (!settings) return;
+                const res = await fetch("/api/admin/settings", {
+                  method: "POST",
+                  headers: { ...AUTH_HEADER, "Content-Type": "application/json" },
+                  body: JSON.stringify(settings),
+                });
+                if (res.ok) showSaveMsg("E-posta kaydedildi!");
+              }}
+              className="text-white font-bold px-5 py-2 rounded-xl text-sm"
+              style={{ background: "#5c1294" }}
+            >
+              Kaydet
+            </button>
+          </div>
+
           {/* Contact Section */}
           <div className="bg-white rounded-2xl shadow p-6">
             <h2 className="text-lg font-black mb-4" style={{ color: "#5c1294" }}>

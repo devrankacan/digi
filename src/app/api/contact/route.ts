@@ -172,7 +172,7 @@ export async function POST(req: NextRequest) {
 
   await transporter.sendMail({
     from: `"Dijitürk Kampanya" <${process.env.SMTP_USER}>`,
-    to: process.env.TO_EMAIL || process.env.SMTP_USER,
+    to: (settings as Record<string, unknown>).notificationEmail as string || process.env.TO_EMAIL || process.env.SMTP_USER,
     subject: `🔔 Yeni Dijitürk Başvurusu — ${name} | ${pkg || "Paket Seçilmedi"}`,
     html,
   });

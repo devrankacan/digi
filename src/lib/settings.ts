@@ -8,6 +8,7 @@ const defaultSettings = {
   logo: null,
   heroImage: null,
   logoText: "dijitürk",
+  notificationEmail: "",
   contact: { whatsapp: "", whatsappDisplay: "", navLinks: [], footerText: "" },
   packages: [],
   about: { title: "Hakkımızda", content: "", address: "", email: "", phone: "" },
