@@ -7,6 +7,7 @@ interface Package {
   label: string;
   desc: string;
   price: string;
+  image?: string;
 }
 
 interface Contact {
@@ -236,7 +237,11 @@ export default function ContactForm({ packages, contact, logo, logoText, heroIma
             <div className="two-col" style={{ display: "flex", gap: "32px", alignItems: "flex-start" }}>
 
               {/* SOL: Paket */}
-              <div style={{ flex: 1, background: C.cardBg, borderRadius: "10px", padding: "28px", border: "1px solid rgba(255,255,255,0.08)" }}>
+              <div style={{ flex: 1, background: C.cardBg, borderRadius: "10px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.08)" }}>
+                {pkg.image && (
+                  <img src={pkg.image} alt={pkg.label} style={{ width: "100%", maxHeight: "260px", objectFit: "cover", display: "block" }} />
+                )}
+                <div style={{ padding: "28px" }}>
                 <h2 style={{ margin: "0 0 16px", fontSize: "20px", fontWeight: 900, color: "#fff" }}>{pkg.label}</h2>
                 {pkg.desc && (
                   <ul style={{ margin: "0 0 18px", padding: 0, listStyle: "none" }}>
@@ -256,6 +261,7 @@ export default function ContactForm({ packages, contact, logo, logoText, heroIma
                 )}
                 <button onClick={() => setShowPopup(true)} className="basvuru-btn">Başvuru Yap</button>
                 <hr style={{ border: "none", borderTop: "1px solid rgba(255,255,255,0.1)", marginTop: "20px" }} />
+                </div>
               </div>
 
               {/* SAĞ: Form (sadece 1. pakette) veya bilgi kutusu */}

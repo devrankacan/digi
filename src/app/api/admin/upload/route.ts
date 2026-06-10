@@ -31,16 +31,19 @@ export async function POST(req: NextRequest) {
   const buffer = Buffer.from(await file.arrayBuffer());
   fs.writeFileSync(path.join(uploadsDir, filename), buffer);
 
-  const url = `/uploads/${filename}`;
+  const url = `/uploads/${filename}?t=${Date.now()}`;
+  const urlClean = `/uploads/${filename}`;
   const settings = getSettings();
   if (type === "hero") {
-    (settings as Record<string, unknown>).heroImage = `${url}?t=${Date.now()}`;
+    (settings as Record<string, unknown>).heroImage = url;
   } else if (type === "favicon") {
-    (settings as Record<string, unknown>).faviconUrl = url;
+    (settings as Record<string, unknown>).faviconUrl = urlClean;
+  } else if (type.startsWith("package-image-")) {
+    // Paket görseli — settings'e kaydetmiyoruz, admin state üzerinden yönetiliyor
   } else {
-    settings.logo = url;
+    settings.logo = urlClean;
   }
   saveSettings(settings);
 
-  return NextResponse.json({ success: true, url, logo: type === "logo" ? url : settings.logo });
+  return NextResponse.json({ success: true, url: urlClean, logo: type === "logo" ? urlClean : settings.logo });
 }

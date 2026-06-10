@@ -19,6 +19,7 @@ interface Package {
   label: string;
   desc: string;
   price: string;
+  image?: string;
 }
 
 interface Contact {
@@ -295,6 +296,20 @@ export default function AdminPage() {
     XLSX.writeFile(wb, fileName);
   }
 
+  async function handlePackageImageUpload(idx: number, file: File) {
+    const fd = new FormData();
+    fd.append("file", file);
+    fd.append("type", `package-image-${packages[idx].id}`);
+    const res = await fetch("/api/admin/upload", { method: "POST", headers: AUTH_HEADER, body: fd });
+    if (res.ok) {
+      const data = await res.json();
+      setPackages(prev => prev.map((p, i) => i === idx ? { ...p, image: data.url } : p));
+      showSaveMsg("Paket görseli yüklendi! Kaydetmeyi unutmayın.");
+    } else {
+      showSaveMsg("Görsel yüklenemedi.");
+    }
+  }
+
   function addPackage() {
     setPackages([
       ...packages,
@@ -514,48 +529,60 @@ export default function AdminPage() {
             </h2>
             <div className="space-y-3">
               {packages.map((pkg, idx) => (
-                <div
-                  key={pkg.id}
-                  className="border border-gray-200 rounded-xl p-3 space-y-2"
-                >
-                  <div className="grid grid-cols-3 gap-2">
+                <div key={pkg.id} className="border border-gray-200 rounded-xl p-4 space-y-3">
+                  {/* Görsel alanı */}
+                  <div>
+                    <label className="block text-xs text-gray-500 mb-1 font-medium">Paket Görseli</label>
+                    <div className="flex items-center gap-3">
+                      {pkg.image ? (
+                        <img src={pkg.image} alt="Paket" className="h-20 w-32 object-cover rounded-lg border border-gray-200 flex-shrink-0" onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                      ) : (
+                        <div className="h-20 w-32 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center flex-shrink-0">
+                          <span className="text-gray-400 text-xs text-center">Görsel yok</span>
+                        </div>
+                      )}
+                      <label className="flex-1 cursor-pointer">
+                        <div className="border border-gray-300 rounded-lg px-3 py-2 text-xs text-gray-500 bg-gray-50 hover:bg-gray-100 transition-colors">
+                          {pkg.image ? "Görseli değiştir" : "Görsel seç (PNG, JPG)"}
+                        </div>
+                        <input type="file" accept="image/*" className="hidden"
+                          onChange={async (e) => {
+                            const file = e.target.files?.[0];
+                            if (file) await handlePackageImageUpload(idx, file);
+                            e.target.value = "";
+                          }} />
+                      </label>
+                      {pkg.image && (
+                        <button onClick={() => setPackages(prev => prev.map((p, i) => i === idx ? { ...p, image: undefined } : p))}
+                          className="text-red-500 text-xs font-semibold px-2 py-1 border border-red-200 rounded-lg hover:bg-red-50">
+                          Sil
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                  {/* Metin alanları */}
+                  <div className="grid grid-cols-2 gap-2">
                     <div>
                       <label className="block text-xs text-gray-500 mb-0.5 font-medium">Paket Adı</label>
-                      <input
-                        type="text"
-                        value={pkg.label}
-                        onChange={(e) => updatePackage(idx, "label", e.target.value)}
-                        placeholder="Paket adı"
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-purple-500"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs text-gray-500 mb-0.5 font-medium">Açıklama</label>
-                      <input
-                        type="text"
-                        value={pkg.desc}
-                        onChange={(e) => updatePackage(idx, "desc", e.target.value)}
-                        placeholder="Açıklama"
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-purple-500"
-                      />
+                      <input type="text" value={pkg.label} onChange={(e) => updatePackage(idx, "label", e.target.value)}
+                        placeholder="Paket adı" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-purple-500" />
                     </div>
                     <div>
                       <label className="block text-xs text-gray-500 mb-0.5 font-medium">Fiyat</label>
-                      <input
-                        type="text"
-                        value={pkg.price}
-                        onChange={(e) => updatePackage(idx, "price", e.target.value)}
-                        placeholder="549₺"
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-purple-500"
-                      />
+                      <input type="text" value={pkg.price} onChange={(e) => updatePackage(idx, "price", e.target.value)}
+                        placeholder="549₺" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-purple-500" />
                     </div>
                   </div>
+                  <div>
+                    <label className="block text-xs text-gray-500 mb-0.5 font-medium">Özellikler (her satır ayrı madde)</label>
+                    <textarea value={pkg.desc} onChange={(e) => updatePackage(idx, "desc", e.target.value)}
+                      placeholder={"Süper Lig, Premier League...\nBeIN CONNECT desteği\n6 ay ücretsiz"}
+                      rows={4} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-purple-500 resize-none" />
+                  </div>
                   <div className="flex justify-end">
-                    <button
-                      onClick={() => removePackage(idx)}
-                      className="text-red-500 hover:text-red-700 text-xs font-semibold px-3 py-1 border border-red-200 rounded-lg transition-colors"
-                    >
-                      Sil
+                    <button onClick={() => removePackage(idx)}
+                      className="text-red-500 hover:text-red-700 text-xs font-semibold px-3 py-1 border border-red-200 rounded-lg transition-colors">
+                      Paketi Sil
                     </button>
                   </div>
                 </div>
