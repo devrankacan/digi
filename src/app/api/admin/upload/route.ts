@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
   const url = `/uploads/${filename}`;
   const settings = getSettings();
   if (type === "hero") {
-    (settings as Record<string, unknown>).heroImage = url;
+    (settings as Record<string, unknown>).heroImage = `${url}?t=${Date.now()}`;
   } else if (type === "favicon") {
     (settings as Record<string, unknown>).faviconUrl = url;
   } else {
